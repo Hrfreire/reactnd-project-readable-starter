@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware } from 'redux'
-import { createSagaMiddleware } from 'react-redux'
-import reducer from './reducers'
-import effects from './effects'
+import createSagaMiddleware from 'redux-saga'
+import reducer from '../reducers'
+import effects from '../effects'
 
 export default function() {
   const sagaMiddleware = createSagaMiddleware()
@@ -11,7 +11,7 @@ export default function() {
       applyMiddleware(sagaMiddleware)
   )
 
-  effects.map((effect) => sagaMiddleware.run(effect));
+  sagaMiddleware.run(effects)
 
   return store;
 }
