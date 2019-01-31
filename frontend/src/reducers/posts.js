@@ -1,4 +1,10 @@
-import { START_FETCH_POSTS, FAILED_FETCH_POSTS, SUCCESS_FETCH_POSTS } from '../actions/posts'
+import {
+  START_FETCH_POSTS,
+  FAILED_FETCH_POSTS,
+  SUCCESS_FETCH_POSTS,
+  START_REGISTER_VOTE,
+  FAILED_REGISTER_VOTE,
+} from '../actions/posts'
 
 const initialState = {
   loading: false,
@@ -23,6 +29,31 @@ export default function reducer(state = initialState, action) {
       return {
         loading: false,
         posts: action.payload
+      }
+    case START_REGISTER_VOTE:
+      return {
+        posts: state.posts.map(post => 
+          post.id !== action.postId
+            ? post
+            : { ...post, 
+                voteScore: action.vote === 'upVote'
+                  ? post.voteScore + 1
+                  : post.voteScore - 1
+              }
+          )
+      }
+    case FAILED_REGISTER_VOTE:
+      return {
+        error: action.error,
+        posts: state.posts.map(post => 
+          post.id !== action.postId
+            ? post
+            : { ...post, 
+                voteScore: action.vote === 'upVote'
+                  ? post.voteScore - 1
+                  : post.voteScore + 1
+              }
+          )
       }
     default:
         return state;

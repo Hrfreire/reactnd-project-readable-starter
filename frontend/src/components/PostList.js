@@ -13,12 +13,11 @@ class PostList extends Component {
   
   render() {
 
-    console.log(this.props);
-    const { posts } = this.props;
-    
+    const { posts, startRegisterVote } = this.props;
+    console.log(posts);
     return (
       <ul>
-        { posts.map((post) => <Post key={post.id}/>)}
+        { posts.map((post) => <Post key={post.id} {...post} startRegisterVote={startRegisterVote}/>)}
       </ul>
     );
   }
