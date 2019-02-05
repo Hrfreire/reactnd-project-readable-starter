@@ -3,7 +3,7 @@ import { Row, Col, Divider } from 'antd'
 import moment from 'moment'
 import VoteScore from './VoteScore'
 
-export default ({ id, voteScore, title, body, author, timestamp, startRegisterCommentVote }) => {
+export default ({ id, voteScore, body, author, timestamp, startRegisterCommentVote }) => {
   return (
 		<Fragment>
 			<li className='comment'>
@@ -12,9 +12,6 @@ export default ({ id, voteScore, title, body, author, timestamp, startRegisterCo
 					registerVote={(vote) => startRegisterCommentVote(id, vote)}
 				/>
 				<div className='post-content'>
-					<Row>
-						<h3>{title}</h3>
-					</Row>
 					<Row>
 						<p className='post-body'>{body}</p>
 					</Row>

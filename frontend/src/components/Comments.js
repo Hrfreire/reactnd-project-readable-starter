@@ -14,13 +14,23 @@ class Comments extends Component {
     startFetchComments(postId)
   }
 
+  createNewComment = ({ author, body }) => {
+    const { startCreateNewComment, postId } = this.props
+
+    startCreateNewComment({
+      parentId: postId,
+      body,
+      author
+    })
+  }
+
   render() {
-    const { comments, startRegisterCommentVote } = this.props; 
+    const { postId, comments, startRegisterCommentVote } = this.props; 
 
     return (
       <div>
         <Divider style={{ height: 2}}/>
-        <NewComment />
+        <NewComment postId={postId} createNewComment={this.createNewComment} />
         <Divider style={{ height: 2}}/>
         <h3>{comments.length} Comments</h3>
         <ul>

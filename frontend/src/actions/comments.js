@@ -55,24 +55,23 @@ function failedRegisterCommentVote (error, postId, vote) {
   }
 }
 
-function startCreateNewComment(postId, body, author, parentId) {
+function startCreateNewComment ({ body, author, parentId }) {
   return {
     type: START_CREATE_NEW_COMMENT,
-    postId,
     body,
     author,
     parentId
   }
 }
 
-function successCreateNewComment(comment) {
+function successCreateNewComment (comment) {
   return {
     type: SUCCESS_CREATE_NEW_COMMENT,
     payload: comment
   }
 }
 
-function failedCreateNewComment(error) {
+function failedCreateNewComment (error) {
   return {
     type: FAILED_CREATE_NEW_COMMENT,
     error
