@@ -4,11 +4,18 @@ import {
   SUCCESS_FETCH_POSTS,
   START_REGISTER_VOTE,
   FAILED_REGISTER_VOTE,
+  START_FETCH_POST,
+  SUCCESS_FETCH_POST,
+  FAILED_FETCH_POST
 } from '../actions/posts'
 
 const initialState = {
-  loading: false,
+  loadingPosts: false,
   posts: [],
+  currentPost: null,
+  loadingPost: false,
+  comments: [],
+  loadingComments: false,
   filter: null,
   error: null
 }
@@ -18,20 +25,23 @@ export default function reducer(state = initialState, action) {
     case START_FETCH_POSTS:
       return {
         ...state,
-        loading: true
+        loadingPosts: true
       }
     case FAILED_FETCH_POSTS:
       return {
-        loading: false,
+        ...state,
+        loadingPosts: false,
         error: action.error
       }
     case SUCCESS_FETCH_POSTS:
       return {
-        loading: false,
+        ...state,
+        loadingPosts: false,
         posts: action.payload
       }
     case START_REGISTER_VOTE:
       return {
+        ...state,
         posts: state.posts.map(post => 
           post.id !== action.postId
             ? post
@@ -44,6 +54,7 @@ export default function reducer(state = initialState, action) {
       }
     case FAILED_REGISTER_VOTE:
       return {
+        ...state,
         error: action.error,
         posts: state.posts.map(post => 
           post.id !== action.postId
@@ -54,6 +65,24 @@ export default function reducer(state = initialState, action) {
                   : post.voteScore + 1
               }
           )
+      }
+    case START_FETCH_POST:
+      return {
+        ...state,
+        loadingPost: true,
+        currentPost: null
+      }
+    case SUCCESS_FETCH_POST:
+      return {
+        ...state,
+        loadingPost: false,
+        currentPost: action.payload
+      }
+    case FAILED_FETCH_POST:
+      return {
+        ...state,
+        loadingPost: false,
+        error: action.error
       }
     default:
         return state;

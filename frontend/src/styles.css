@@ -4,6 +4,10 @@ ul {
   padding: 0;
 }
 
+.post-list-wrapper {
+  display: flex;
+  justify-content: center;
+}
 
 .post {
   display: flex;
@@ -18,6 +22,10 @@ ul {
 .post-body {
   font-size: 15px;
   color: #000;
+}
+
+.post h2 {
+  color: inherit;
 }
 
 .vote-score {

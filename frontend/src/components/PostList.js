@@ -13,12 +13,18 @@ class PostList extends Component {
   
   render() {
 
-    const { posts, startRegisterVote } = this.props;
-    console.log(posts);
+    const { posts, startRegisterVote } = this.props
+    
     return (
-      <ul>
-        { posts.map((post) => <Post key={post.id} {...post} startRegisterVote={startRegisterVote}/>)}
-      </ul>
+      <div className='post-list-wrapper'>
+        <ul>
+          { posts.map((post) => 
+            <li key={post.id}>
+              <Post {...post} startRegisterVote={startRegisterVote}/>
+            </li>
+          )}
+        </ul>
+      </div>
     );
   }
 }

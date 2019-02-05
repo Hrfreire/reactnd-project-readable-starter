@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Card, Row, Col } from 'antd'
 import moment from 'moment'
+import { Link } from 'react-router-dom'
 import VoteScore from './VoteScore'
 
 class Post extends Component {
@@ -18,6 +19,7 @@ class Post extends Component {
 	render() {
 
 		const {
+			id,
 			title,
 			body,
 			author,
@@ -27,38 +29,35 @@ class Post extends Component {
 		} = this.props;
 
 		return (
-			<li>
-				<Card
-					bordered
-					style={{ width: 600, marginBottom: 15 }}
-					actions={[
-						<a>Comments</a>
-					]}
-				>
-					<div className='post'>
-							<VoteScore voteScore={voteScore} registerVote={this.registerVote}/>
-							<div className='post-content'>
-								<Row>
+			<Card
+				bordered
+				style={{ width: 600, marginBottom: 15 }}
+			>
+				<div className='post'>
+						<VoteScore voteScore={voteScore} registerVote={this.registerVote}/>
+						<div className='post-content'>
+							<Row>
+								<Link to={`/posts/${id}`}>
 									<h2>{title}</h2>
-								</Row>
-								<Row>
-									<p className='post-body'>{body}</p>
-								</Row>
-								<Row>
-									<Col span={12}>
-										<span>Author: {author}</span>
-									</Col>
-									<Col span={12}>
-										<span style={{ float: 'right'}}>Category: {category}</span>
-									</Col>
-								</Row>
-								<Row style={{ marginTop: 10}}>
-									<span>Posted on: {moment(timestamp).format('LLLL')}</span>
-								</Row>
-						</div>
+								</Link>
+							</Row>
+							<Row>
+								<p className='post-body'>{body}</p>
+							</Row>
+							<Row>
+								<Col span={12}>
+									<span>Author: {author}</span>
+								</Col>
+								<Col span={12}>
+									<span style={{ float: 'right'}}>Category: {category}</span>
+								</Col>
+							</Row>
+							<Row style={{ marginTop: 10}}>
+								<span>Posted on: {moment(timestamp).format('LLLL')}</span>
+							</Row>
 					</div>
-				</Card>	
-			</li>
+				</div>
+			</Card>
 		)
 			
 	}
