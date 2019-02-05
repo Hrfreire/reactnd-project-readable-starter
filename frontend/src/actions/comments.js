@@ -6,6 +6,10 @@ export const START_REGISTER_COMMENT_VOTE  = 'START_REGISTER_COMMENT_VOTE'
 export const SUCCESS_REGISTER_COMMENT_VOTE = 'SUCCESS_REGISTER_COMMENT_VOTE'
 export const FAILED_REGISTER_COMMENT_VOTE = 'FAILED_REGISTER_COMMENT_VOTE' 
 
+export const START_CREATE_NEW_COMMENT = 'START_CREATE_NEW_COMMENT'
+export const SUCCESS_CREATE_NEW_COMMENT = 'SUCCESS_CREATE_NEW_COMMENT'
+export const FAILED_CREATE_NEW_COMMENT = 'FAILED_CREATE_NEW_COMMENT'
+
 function startFetchComments (postId) {
   return {
     type: START_FETCH_COMMENTS,
@@ -51,6 +55,31 @@ function failedRegisterCommentVote (error, postId, vote) {
   }
 }
 
+function startCreateNewComment(postId, body, author, parentId) {
+  return {
+    type: START_CREATE_NEW_COMMENT,
+    postId,
+    body,
+    author,
+    parentId
+  }
+}
+
+function successCreateNewComment(comment) {
+  return {
+    type: SUCCESS_CREATE_NEW_COMMENT,
+    payload: comment
+  }
+}
+
+function failedCreateNewComment(error) {
+  return {
+    type: FAILED_CREATE_NEW_COMMENT,
+    error
+  }
+}
+
+
 export const actionCreators = {
   startFetchComments,
   successFetchComments,
@@ -58,5 +87,9 @@ export const actionCreators = {
 
   startRegisterCommentVote,
   successRegisterCommentVote,
-  failedRegisterCommentVote
+  failedRegisterCommentVote,
+
+  startCreateNewComment,
+  successCreateNewComment,
+  failedCreateNewComment
 }

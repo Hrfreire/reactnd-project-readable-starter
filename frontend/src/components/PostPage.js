@@ -20,7 +20,7 @@ class PostPage extends Component {
     }
 
     return (
-      <div>
+      <div className='post-page-wrapper'>
         <Post {...post} startRegisterVote={startRegisterVote}/>
         <Comments postId={post.id} />
       </div>

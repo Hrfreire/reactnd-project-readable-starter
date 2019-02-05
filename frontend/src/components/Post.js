@@ -31,7 +31,8 @@ class Post extends Component {
 		return (
 			<Card
 				bordered
-				style={{ width: 600, marginBottom: 15 }}
+				style={{ marginBottom: 15 }}
+				bodyStyle={{ width: '600px' }}
 			>
 				<div className='post'>
 						<VoteScore voteScore={voteScore} registerVote={this.registerVote}/>

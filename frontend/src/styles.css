@@ -46,3 +46,22 @@ ul {
 	cursor: pointer;
 	outline: inherit;
 }
+
+.post-page-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: auto;
+  padding-top: 30px;
+}
+
+.new-comment {
+  width: 600px;
+}
+
+.comment {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

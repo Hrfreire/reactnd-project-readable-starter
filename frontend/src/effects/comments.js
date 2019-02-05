@@ -21,10 +21,10 @@ function* fetchComments ({ postId }) {
 function* registerCommentVote ({ commentId, vote }) {
   try {
     const comment = yield call(api, 'post', `comments/${commentId}`, { option: vote });
-    yield put(actionCreators.successRegisterVote(comment))
+    yield put(actionCreators.startRegisterCommentVote(comment))
   }
   catch (error) {
-    yield put(actionCreators.failedRegisterVote(error, commentId, vote))
+    yield put(actionCreators.failedRegisterCommentVote(error, commentId, vote))
   }
 }
 
