@@ -2,16 +2,20 @@ import React, { Component, Fragment } from 'react'
 import { BrowserRouter as Router, Route} from 'react-router-dom'
 import PostList from './PostList'
 import PostPage from './PostPage'
+import CategoriesBar from './CategoriesBar'
 
 class App extends Component {
   render() {
     return (
-      <Router>
-        <Fragment>
-          <Route path='/' exact component={PostList}/>
-          <Route path='/posts/:id' exact component={PostPage}/>
-        </Fragment>
-      </Router>
+      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', width: '100%'}}>
+        <Router>
+          <Fragment>
+            <Route path='/:category?' component={CategoriesBar}/>
+            <Route path='/:category?' exact component={PostList}/>
+            <Route path='/posts/:id' exact component={PostPage}/>
+          </Fragment>
+        </Router>
+      </div>
     );
   }
 }

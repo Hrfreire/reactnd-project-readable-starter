@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, Row, Col } from 'antd'
+import { Card, Row, Col, Icon } from 'antd'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
 import VoteScore from './VoteScore'
@@ -9,6 +9,7 @@ class Post extends Component {
 	registerVote = (vote) => {
 		const { startRegisterVote, id } = this.props;
 		
+		console.log('vote!!!!', vote, id);
 		if(vote !== 'upVote' && vote !== 'downVote') {
 			return;
 		}
@@ -33,15 +34,16 @@ class Post extends Component {
 				bordered
 				style={{ marginBottom: 15 }}
 				bodyStyle={{ width: '600px' }}
+				title={
+					<Link to={`/posts/${id}`}>
+						{title}
+					</Link>
+				}
+				extra={<a href="#"><Icon type="ellipsis" theme="outlined"/></a>}
 			>
 				<div className='post'>
 						<VoteScore voteScore={voteScore} registerVote={this.registerVote}/>
 						<div className='post-content'>
-							<Row>
-								<Link to={`/posts/${id}`}>
-									<h2>{title}</h2>
-								</Link>
-							</Row>
 							<Row>
 								<p className='post-body'>{body}</p>
 							</Row>
@@ -50,7 +52,12 @@ class Post extends Component {
 									<span>Author: {author}</span>
 								</Col>
 								<Col span={12}>
-									<span style={{ float: 'right'}}>Category: {category}</span>
+									<span style={{ float: 'right'}}>
+										Category: {' '} 
+										<Link to={`/${category}`}>
+											{category}
+										</Link>
+									</span>
 								</Col>
 							</Row>
 							<Row style={{ marginTop: 10}}>

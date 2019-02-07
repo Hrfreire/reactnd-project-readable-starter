@@ -8,7 +8,21 @@ import { actionCreators } from '../actions/posts'
 class PostList extends Component {
   
   componentDidMount() {
-    this.props.startFetchPosts();
+    this.fetchPosts()
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.category !== this.props.category) {
+      this.fetchPosts()
+    }
+  }
+
+  fetchPosts = () => {
+    // Category is optional. If not passed, startFetchPosts will return all posts.
+    
+    const { category, startFetchPosts } = this.props
+
+    startFetchPosts(category);
   }
   
   render() {
@@ -29,7 +43,12 @@ class PostList extends Component {
   }
 }
 
-const mapStateToProps = (state) => (state.posts)
+const mapStateToProps = (state, { match }) => {
+  return {
+    ...state.posts,
+    category: match.params.category
+  }
+}
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(actionCreators, dispatch);

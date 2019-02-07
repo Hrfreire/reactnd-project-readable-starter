@@ -42,6 +42,14 @@ export default function reducer(state = initialState, action) {
     case START_REGISTER_VOTE:
       return {
         ...state,
+        currentPost: state.currentPost !== null && state.currentPost.id === action.postId
+        ?  { ...state.currentPost, 
+          voteScore: action.vote === 'upVote'
+            ? state.currentPost.voteScore + 1
+            : state.currentPost.voteScore - 1
+        }
+        : state.currentPost,
+        
         posts: state.posts.map(post => 
           post.id !== action.postId
             ? post
@@ -56,6 +64,14 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         error: action.error,
+        currentPost: state.currentPost !== null && state.currentPost.id === action.postId
+        ?  { ...state.currentPost, 
+            voteScore: action.vote === 'upVote'
+              ? state.currentPost.voteScore - 1
+              : state.currentPost.voteScore + 1
+          }
+        : state.currentPost,
+        
         posts: state.posts.map(post => 
           post.id !== action.postId
             ? post
