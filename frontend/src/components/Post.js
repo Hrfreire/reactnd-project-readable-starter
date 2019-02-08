@@ -35,7 +35,7 @@ class Post extends Component {
 				style={{ marginBottom: 15 }}
 				bodyStyle={{ width: '600px' }}
 				title={
-					<Link to={`/posts/${id}`}>
+					<Link to={`/posts/details/${id}`}>
 						{title}
 					</Link>
 				}

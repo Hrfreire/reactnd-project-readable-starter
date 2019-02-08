@@ -1,9 +1,12 @@
 import { takeLatest, put, call, all } from 'redux-saga/effects'
+import uuidv1 from 'uuid/v1'
+import moment from 'moment'
 import {
   actionCreators,
   START_FETCH_POSTS,
   START_REGISTER_VOTE,
-  START_FETCH_POST
+  START_FETCH_POST,
+  START_CREATE_NEW_POST
 } from '../actions/posts'
 import api from '../api'
 
@@ -45,10 +48,30 @@ function* registerVote ({ postId, vote }) {
   }
 }
 
+function* createNewPost ({ title, body, author, category }) {
+  try {
+
+    const post = yield call(api, 'post', 'posts', {
+      id: uuidv1(),
+      timestamp: moment().format(),
+      title,
+      body,
+      author,
+      category
+    })
+
+    yield put(actionCreators.successCreatePost(post))
+  } catch (error) {
+    yield put(actionCreators.failedCreateNewPost(error))
+  }
+}
+
+
 export default function* root() {
   yield all([
       takeLatest(START_FETCH_POSTS, fetchPosts),
       takeLatest(START_FETCH_POST, fetchPost),
-      takeLatest(START_REGISTER_VOTE, registerVote)
+      takeLatest(START_REGISTER_VOTE, registerVote),
+      takeLatest(START_CREATE_NEW_POST, createNewPost)
   ]);
 }

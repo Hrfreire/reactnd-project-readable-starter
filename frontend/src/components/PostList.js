@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { Button } from 'antd'
 
 import Post from './Post'
 import { actionCreators } from '../actions/posts'
@@ -30,14 +31,17 @@ class PostList extends Component {
     const { posts, startRegisterVote } = this.props
     
     return (
-      <div className='post-list-wrapper'>
-        <ul>
-          { posts.map((post) => 
-            <li key={post.id}>
-              <Post {...post} startRegisterVote={startRegisterVote}/>
-            </li>
-          )}
-        </ul>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+        <Button type="primary" style={{ width: 600, marginTop: 30 }}>New Post</Button>
+        <div className='post-list-wrapper'>
+          <ul>
+            { posts.map((post) => 
+              <li key={post.id}>
+                <Post {...post} startRegisterVote={startRegisterVote}/>
+              </li>
+            )}
+          </ul>
+        </div>
       </div>
     );
   }

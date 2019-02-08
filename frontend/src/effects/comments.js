@@ -43,7 +43,6 @@ function* createNewComment ({ body, author, parentId }) {
 
     yield put(actionCreators.successCreateNewComment(comment))
   } catch (error) {
-    console.log(error);
     yield put(actionCreators.failedCreateNewComment(error))
   }
 }

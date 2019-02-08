@@ -10,6 +10,10 @@ export const START_REGISTER_VOTE  = 'START_REGISTER_VOTE'
 export const SUCCESS_REGISTER_VOTE = 'SUCCESS_REGISTER_VOTE'
 export const FAILED_REGISTER_VOTE = 'FAILED_REGISTER_VOTE' 
 
+export const START_CREATE_NEW_POST = 'START_CREATE_NEW_POST'
+export const SUCCESS_CREATE_NEW_POST = 'SUCCESS_CREATE_NEW_POST'
+export const FAILED_CREATE_NEW_POST = 'FAILED_CREATE_NEW_POST'
+
 function startFetchPosts (filter) {
   return {
     type: START_FETCH_POSTS,
@@ -76,6 +80,30 @@ function failedRegisterVote (error, postId, vote) {
   }
 }
 
+function startCreateNewPost ({ title, body, author, category }) {
+  return {
+    type: START_CREATE_NEW_POST,
+    title,
+    body,
+    author,
+    category
+  }
+}
+
+function successCreateNewPost (post) {
+  return {
+    type: SUCCESS_CREATE_NEW_POST,
+    payload: post
+  }
+}
+
+function failedCreateNewPost (error) {
+  return {
+    type: FAILED_CREATE_NEW_POST,
+    error
+  }
+}
+
 export const actionCreators = {
   startFetchPosts,
   successFetchPosts,
@@ -87,5 +115,9 @@ export const actionCreators = {
 
   startRegisterVote,
   successRegisterVote,
-  failedRegisterVote
+  failedRegisterVote,
+
+  startCreateNewPost,
+  successCreateNewPost,
+  failedCreateNewPost
 }
