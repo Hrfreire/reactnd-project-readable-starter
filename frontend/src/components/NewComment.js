@@ -15,18 +15,18 @@ class NewComment extends Component {
   }
 
   send = () => {
-    const { author, body } = this.state;
+    const { author, body } = this.state
 
-    const { createNewComment } = this.props;
+    const { createNewComment } = this.props
 
-    createNewComment({ author, body });
+    createNewComment({ author, body })
 
     this.setState({ author: '', body: '' })
   }
   
   render () {
 
-    const { author, body } = this.state;
+    const { author, body } = this.state
 
     return (
       <div className='new-comment'>

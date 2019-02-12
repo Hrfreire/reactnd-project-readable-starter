@@ -13,7 +13,7 @@ class CategoriesBar extends Component {
 
   render( ){
     
-    const { currentCategory, categories } = this.props;
+    const { currentCategory, categories } = this.props
 
     return (
       <Menu

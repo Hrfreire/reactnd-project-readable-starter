@@ -13,12 +13,12 @@ class App extends Component {
           <Fragment>
             <Route path='/:category?' component={CategoriesBar}/>
             <Route path='/:category?' exact component={PostList}/>
+            <Route path='/posts/details/:id' exact component={PostPage}/>
             <Route path='/posts/new/:id?' exact component={NewPost}/>
-            <Route path='/posts/datails/:id' exact component={PostPage}/>
           </Fragment>
         </Router>
       </div>
-    );
+    )
   }
 }
 

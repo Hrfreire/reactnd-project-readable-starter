@@ -23,16 +23,26 @@ class PostList extends Component {
     
     const { category, startFetchPosts } = this.props
 
-    startFetchPosts(category);
+    startFetchPosts(category)
+  }
+
+  newPost = () => {
+    this.props.history.push('/posts/new')
   }
   
   render() {
 
     const { posts, startRegisterVote } = this.props
-    
+
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-        <Button type="primary" style={{ width: 600, marginTop: 30 }}>New Post</Button>
+        <Button
+          type="primary"
+          style={{ width: 600, marginTop: 30 }}
+          onClick={this.newPost}
+        >
+          New Post
+        </Button>
         <div className='post-list-wrapper'>
           <ul>
             { posts.map((post) => 
@@ -43,7 +53,7 @@ class PostList extends Component {
           </ul>
         </div>
       </div>
-    );
+    )
   }
 }
 
@@ -55,7 +65,7 @@ const mapStateToProps = (state, { match }) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators(actionCreators, dispatch);
+  return bindActionCreators(actionCreators, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostList)

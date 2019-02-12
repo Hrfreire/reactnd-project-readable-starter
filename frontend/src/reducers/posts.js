@@ -1,3 +1,4 @@
+import moment from 'moment'
 import {
   START_FETCH_POSTS,
   FAILED_FETCH_POSTS,
@@ -6,7 +7,11 @@ import {
   FAILED_REGISTER_VOTE,
   START_FETCH_POST,
   SUCCESS_FETCH_POST,
-  FAILED_FETCH_POST
+  FAILED_FETCH_POST,
+  START_CREATE_NEW_POST,
+  SUCCESS_CREATE_NEW_POST,
+  FAILED_CREATE_NEW_POST,
+  RESET_NEW_POST_STATE
 } from '../actions/posts'
 
 const initialState = {
@@ -17,7 +22,9 @@ const initialState = {
   comments: [],
   loadingComments: false,
   filter: null,
-  error: null
+  error: null,
+  newPostRedirect: false,
+  loadingNewPost: false
 }
 
 export default function reducer(state = initialState, action) {
@@ -37,7 +44,9 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         loadingPosts: false,
-        posts: action.payload
+        posts: action.payload.sort(
+          (a, b) => moment.utc(b.timestamp).diff(moment.utc(a.timestamp))
+        ),
       }
     case START_REGISTER_VOTE:
       return {
@@ -100,7 +109,30 @@ export default function reducer(state = initialState, action) {
         loadingPost: false,
         error: action.error
       }
+    case START_CREATE_NEW_POST:
+      return {
+        ...state,
+        loadingNewPost: true
+      }
+    case SUCCESS_CREATE_NEW_POST:
+      return {
+        ...state,
+        loadingNewPost: false,
+        newPostRedirect: true
+      }
+    case FAILED_CREATE_NEW_POST:
+      return {
+        ...state,
+        error: action.error
+      }
+    case RESET_NEW_POST_STATE:
+      return {
+        ...state,
+        loadingNewPost: false,
+        newPostRedirect: false,
+        currentPost: null
+      }
     default:
-        return state;
+        return state
   }
 }

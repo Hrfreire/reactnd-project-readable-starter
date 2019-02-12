@@ -13,5 +13,5 @@ export default function() {
 
   sagaMiddleware.run(effects)
 
-  return store;
+  return store
 }

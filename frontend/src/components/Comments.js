@@ -25,7 +25,7 @@ class Comments extends Component {
   }
 
   render() {
-    const { postId, comments, startRegisterCommentVote } = this.props; 
+    const { postId, comments, startRegisterCommentVote } = this.props
 
     return (
       <div>
@@ -45,7 +45,7 @@ class Comments extends Component {
       </div>
     )
   }
-};
+}
 
 const mapStateToProps = (state) => state.comments
 

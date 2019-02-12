@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, Row, Col, Icon } from 'antd'
+import { Card, Row, Col, Icon, Menu, Dropdown } from 'antd'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
 import VoteScore from './VoteScore'
@@ -7,15 +7,38 @@ import VoteScore from './VoteScore'
 class Post extends Component {
 	
 	registerVote = (vote) => {
-		const { startRegisterVote, id } = this.props;
+		const { startRegisterVote, id } = this.props
 		
-		console.log('vote!!!!', vote, id);
 		if(vote !== 'upVote' && vote !== 'downVote') {
-			return;
+			return
 		}
 
-		startRegisterVote(id, vote);
-	}	
+		startRegisterVote(id, vote)
+	}
+
+	handleMenuClick = (item ,key) => {
+		
+	}
+
+	renderMenu = () => {
+		const options = (
+			<Menu onClick={this.handleMenuClick}>
+				<Menu.Item key="0">
+					<Icon type="edit" theme="outlined" /> Edit
+				</Menu.Item>
+				
+				<Menu.Item key="1">
+					<Icon type="delete" theme="outlined"/>Delete
+				</Menu.Item>
+			</Menu>
+		)		
+		
+		return (
+			<Dropdown overlay={options} trigger={['click']}>
+				<Icon type="ellipsis" theme="outlined"/>
+			</Dropdown>
+		)
+	}
 
 	render() {
 
@@ -27,7 +50,7 @@ class Post extends Component {
 			category,
 			voteScore,
 			timestamp
-		} = this.props;
+		} = this.props
 
 		return (
 			<Card
@@ -39,7 +62,7 @@ class Post extends Component {
 						{title}
 					</Link>
 				}
-				extra={<a href="#"><Icon type="ellipsis" theme="outlined"/></a>}
+				extra={this.renderMenu()}
 			>
 				<div className='post'>
 						<VoteScore voteScore={voteScore} registerVote={this.registerVote}/>

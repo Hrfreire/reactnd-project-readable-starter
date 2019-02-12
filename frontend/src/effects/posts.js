@@ -12,13 +12,13 @@ import api from '../api'
 
 function* fetchPosts ({ filter }) {
   try {
-    let endPoint = 'posts';
+    let endPoint = 'posts'
     
     if(filter !== undefined) {
         endPoint = `${filter}/${endPoint}`
     }
   
-    const posts =  yield call(api, 'get', endPoint);
+    const posts =  yield call(api, 'get', endPoint)
 
     yield put(actionCreators.successFetchPosts(posts))
   }
@@ -29,7 +29,7 @@ function* fetchPosts ({ filter }) {
 
 function* fetchPost ({ postId }) {
   try {
-    const post =  yield call(api, 'get', `posts/${postId}`);
+    const post =  yield call(api, 'get', `posts/${postId}`)
 
     yield put(actionCreators.successFetchPost(post))
   }
@@ -40,7 +40,7 @@ function* fetchPost ({ postId }) {
 
 function* registerVote ({ postId, vote }) {
   try {
-    const post = yield call(api, 'post', `posts/${postId}`, { option: vote });
+    const post = yield call(api, 'post', `posts/${postId}`, { option: vote })
     yield put(actionCreators.successRegisterVote(post))
   }
   catch (error) {
@@ -60,7 +60,7 @@ function* createNewPost ({ title, body, author, category }) {
       category
     })
 
-    yield put(actionCreators.successCreatePost(post))
+    yield put(actionCreators.successCreateNewPost(post))
   } catch (error) {
     yield put(actionCreators.failedCreateNewPost(error))
   }
@@ -73,5 +73,5 @@ export default function* root() {
       takeLatest(START_FETCH_POST, fetchPost),
       takeLatest(START_REGISTER_VOTE, registerVote),
       takeLatest(START_CREATE_NEW_POST, createNewPost)
-  ]);
+  ])
 }

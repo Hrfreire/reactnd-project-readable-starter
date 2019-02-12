@@ -24,10 +24,19 @@ class NewPost extends Component {
 
     if(!title || !body || !author || !category) {
       alert('You must fiil all the fields to create a new post.')
-      return;
+      return
     }
 
     this.props.startCreateNewPost({ title, author, body, category })
+  }
+
+  componentDidUpdate() {
+
+    if(this.props.newPostRedirect) {
+      this.props.resetNewPostState()
+      this.props.history.push('/')
+    }
+
   }
 
   render () {

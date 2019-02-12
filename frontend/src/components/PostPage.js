@@ -36,7 +36,7 @@ const mapStateToProps = (state, { match }) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators(actionCreators, dispatch);
+  return bindActionCreators(actionCreators, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostPage)

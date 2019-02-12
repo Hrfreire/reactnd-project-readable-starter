@@ -13,6 +13,7 @@ export const FAILED_REGISTER_VOTE = 'FAILED_REGISTER_VOTE'
 export const START_CREATE_NEW_POST = 'START_CREATE_NEW_POST'
 export const SUCCESS_CREATE_NEW_POST = 'SUCCESS_CREATE_NEW_POST'
 export const FAILED_CREATE_NEW_POST = 'FAILED_CREATE_NEW_POST'
+export const RESET_NEW_POST_STATE = 'RESET_NEW_POST_STATE'
 
 function startFetchPosts (filter) {
   return {
@@ -104,6 +105,12 @@ function failedCreateNewPost (error) {
   }
 }
 
+function resetNewPostState () {
+  return {
+    type: RESET_NEW_POST_STATE
+  }
+}
+
 export const actionCreators = {
   startFetchPosts,
   successFetchPosts,
@@ -119,5 +126,6 @@ export const actionCreators = {
 
   startCreateNewPost,
   successCreateNewPost,
-  failedCreateNewPost
+  failedCreateNewPost,
+  resetNewPostState
 }

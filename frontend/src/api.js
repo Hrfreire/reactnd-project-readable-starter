@@ -6,7 +6,7 @@ export default (method, endPoint, data = undefined) => {
 	let token = window.localStorage.getItem('token')
 
 	if(!token) {
-		token = uuidv1();
+		token = uuidv1()
 		window.localStorage.setItem('token', token)
 	}
 
