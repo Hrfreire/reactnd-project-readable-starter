@@ -16,18 +16,23 @@ class Post extends Component {
 		startRegisterVote(id, vote)
 	}
 
-	handleMenuClick = (item ,key) => {
+	handleMenuClick = ({ key }) => {
+		const { id, startDeletePost } = this.props
 		
+		console.log(key)
+		if (key === 'delete') {
+			startDeletePost(id)
+		}
 	}
 
 	renderMenu = () => {
 		const options = (
 			<Menu onClick={this.handleMenuClick}>
-				<Menu.Item key="0">
+				<Menu.Item key="edit">
 					<Icon type="edit" theme="outlined" /> Edit
 				</Menu.Item>
 				
-				<Menu.Item key="1">
+				<Menu.Item key="delete">
 					<Icon type="delete" theme="outlined"/>Delete
 				</Menu.Item>
 			</Menu>

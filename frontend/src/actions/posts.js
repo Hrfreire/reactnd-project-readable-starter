@@ -15,6 +15,10 @@ export const SUCCESS_CREATE_NEW_POST = 'SUCCESS_CREATE_NEW_POST'
 export const FAILED_CREATE_NEW_POST = 'FAILED_CREATE_NEW_POST'
 export const RESET_NEW_POST_STATE = 'RESET_NEW_POST_STATE'
 
+export const START_DELETE_POST = 'START_DELETE_POST'
+export const SUCCESS_DELETE_POST = 'SUCCESS_DELETE_POST'
+export const FAILED_DELETE_POST = 'FAILED_DELETE_POST'
+
 function startFetchPosts (filter) {
   return {
     type: START_FETCH_POSTS,
@@ -111,6 +115,27 @@ function resetNewPostState () {
   }
 }
 
+function startDeletePost (postId) {
+  return {
+    type: START_DELETE_POST,
+    postId
+  }
+}
+
+function successDeletePost (postId) {
+  return {
+    type: SUCCESS_DELETE_POST,
+    postId
+  }
+}
+
+function failedDeletePost (error) {
+  return {
+    type: FAILED_DELETE_POST,
+    error
+  }
+}
+
 export const actionCreators = {
   startFetchPosts,
   successFetchPosts,
@@ -127,5 +152,9 @@ export const actionCreators = {
   startCreateNewPost,
   successCreateNewPost,
   failedCreateNewPost,
-  resetNewPostState
+  resetNewPostState,
+  
+  startDeletePost,
+  successDeletePost,
+  failedDeletePost
 }

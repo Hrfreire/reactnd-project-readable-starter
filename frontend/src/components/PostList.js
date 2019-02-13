@@ -32,7 +32,7 @@ class PostList extends Component {
   
   render() {
 
-    const { posts, startRegisterVote } = this.props
+    const { posts, startRegisterVote, startDeletePost } = this.props
 
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
@@ -47,7 +47,11 @@ class PostList extends Component {
           <ul>
             { posts.map((post) => 
               <li key={post.id}>
-                <Post {...post} startRegisterVote={startRegisterVote}/>
+                <Post
+                  startRegisterVote={startRegisterVote}
+                  startDeletePost={startDeletePost}
+                  {...post}
+                />
               </li>
             )}
           </ul>

@@ -1,6 +1,5 @@
 import moment from 'moment'
 import {
-  START_FETCH_POSTS,
   FAILED_FETCH_POSTS,
   SUCCESS_FETCH_POSTS,
   START_REGISTER_VOTE,
@@ -8,42 +7,31 @@ import {
   START_FETCH_POST,
   SUCCESS_FETCH_POST,
   FAILED_FETCH_POST,
-  START_CREATE_NEW_POST,
   SUCCESS_CREATE_NEW_POST,
   FAILED_CREATE_NEW_POST,
-  RESET_NEW_POST_STATE
+  RESET_NEW_POST_STATE,
+  SUCCESS_DELETE_POST,
+  FAILED_DELETE_POST
 } from '../actions/posts'
 
 const initialState = {
-  loadingPosts: false,
   posts: [],
   currentPost: null,
-  loadingPost: false,
-  comments: [],
-  loadingComments: false,
   filter: null,
   error: null,
   newPostRedirect: false,
-  loadingNewPost: false
 }
 
 export default function reducer(state = initialState, action) {
   switch(action.type) {
-    case START_FETCH_POSTS:
-      return {
-        ...state,
-        loadingPosts: true
-      }
     case FAILED_FETCH_POSTS:
       return {
         ...state,
-        loadingPosts: false,
         error: action.error
       }
     case SUCCESS_FETCH_POSTS:
       return {
         ...state,
-        loadingPosts: false,
         posts: action.payload.sort(
           (a, b) => moment.utc(b.timestamp).diff(moment.utc(a.timestamp))
         ),
@@ -94,30 +82,21 @@ export default function reducer(state = initialState, action) {
     case START_FETCH_POST:
       return {
         ...state,
-        loadingPost: true,
         currentPost: null
       }
     case SUCCESS_FETCH_POST:
       return {
         ...state,
-        loadingPost: false,
         currentPost: action.payload
       }
     case FAILED_FETCH_POST:
       return {
         ...state,
-        loadingPost: false,
         error: action.error
-      }
-    case START_CREATE_NEW_POST:
-      return {
-        ...state,
-        loadingNewPost: true
       }
     case SUCCESS_CREATE_NEW_POST:
       return {
         ...state,
-        loadingNewPost: false,
         newPostRedirect: true
       }
     case FAILED_CREATE_NEW_POST:
@@ -128,9 +107,18 @@ export default function reducer(state = initialState, action) {
     case RESET_NEW_POST_STATE:
       return {
         ...state,
-        loadingNewPost: false,
         newPostRedirect: false,
         currentPost: null
+      }
+    case SUCCESS_DELETE_POST:
+      return {
+        ...state,
+        posts: state.posts.filter((post) => post.id !== action.postId),
+      }
+    case FAILED_DELETE_POST:
+      return {
+        ...state,
+        error: action.error
       }
     default:
         return state

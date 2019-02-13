@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import { BrowserRouter as Router, Route} from 'react-router-dom'
+import LoadingBar from 'react-redux-loading'
 import PostList from './PostList'
 import PostPage from './PostPage'
 import CategoriesBar from './CategoriesBar'
@@ -11,6 +12,7 @@ class App extends Component {
       <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', width: '100%'}}>
         <Router>
           <Fragment>
+            <LoadingBar />
             <Route path='/:category?' component={CategoriesBar}/>
             <Route path='/:category?' exact component={PostList}/>
             <Route path='/posts/details/:id' exact component={PostPage}/>

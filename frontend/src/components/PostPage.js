@@ -13,7 +13,7 @@ class PostPage extends Component {
   }
 
   render() {
-    const { post, startRegisterVote } = this.props
+    const { post, startRegisterVote, startDeletePost } = this.props
 
     if(post === null) {
       return <div />
@@ -21,7 +21,11 @@ class PostPage extends Component {
 
     return (
       <div className='post-page-wrapper'>
-        <Post {...post} startRegisterVote={startRegisterVote}/>
+        <Post
+          startRegisterVote={startRegisterVote}
+          startDeletePost={startDeletePost}
+          {...post}
+        />
         <Comments postId={post.id} />
       </div>
     )
