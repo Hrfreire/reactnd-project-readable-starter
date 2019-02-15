@@ -11,7 +11,9 @@ import {
   FAILED_CREATE_NEW_POST,
   RESET_NEW_POST_STATE,
   SUCCESS_DELETE_POST,
-  FAILED_DELETE_POST
+  FAILED_DELETE_POST,
+  SUCCESS_EDIT_POST,
+  FAILED_EDIT_POST
 } from '../actions/posts'
 
 const initialState = {
@@ -116,6 +118,20 @@ export default function reducer(state = initialState, action) {
         posts: state.posts.filter((post) => post.id !== action.postId),
       }
     case FAILED_DELETE_POST:
+      return {
+        ...state,
+        error: action.error
+      }
+    case SUCCESS_EDIT_POST:
+      return {
+        ...state,
+        newPostRedirect: true,
+        posts: state.posts.map((post) => post.id !== action.payload.id
+          ? { ...post }
+          : { ...action.payload }
+        )
+      }
+    case FAILED_EDIT_POST:
       return {
         ...state,
         error: action.error

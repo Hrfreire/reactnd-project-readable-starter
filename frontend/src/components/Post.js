@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Card, Row, Col, Icon, Menu, Dropdown } from 'antd'
 import moment from 'moment'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import VoteScore from './VoteScore'
 
 class Post extends Component {
@@ -17,11 +17,13 @@ class Post extends Component {
 	}
 
 	handleMenuClick = ({ key }) => {
-		const { id, startDeletePost } = this.props
+		const { id, startDeletePost, history } = this.props
 		
 		console.log(key)
 		if (key === 'delete') {
 			startDeletePost(id)
+		} else {
+			history.push(`/posts/edit/${id}`)
 		}
 	}
 
@@ -99,4 +101,4 @@ class Post extends Component {
 	}
 }
 
-export default Post
+export default withRouter(Post)

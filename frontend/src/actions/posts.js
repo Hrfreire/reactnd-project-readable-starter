@@ -13,11 +13,16 @@ export const FAILED_REGISTER_VOTE = 'FAILED_REGISTER_VOTE'
 export const START_CREATE_NEW_POST = 'START_CREATE_NEW_POST'
 export const SUCCESS_CREATE_NEW_POST = 'SUCCESS_CREATE_NEW_POST'
 export const FAILED_CREATE_NEW_POST = 'FAILED_CREATE_NEW_POST'
+
 export const RESET_NEW_POST_STATE = 'RESET_NEW_POST_STATE'
 
 export const START_DELETE_POST = 'START_DELETE_POST'
 export const SUCCESS_DELETE_POST = 'SUCCESS_DELETE_POST'
 export const FAILED_DELETE_POST = 'FAILED_DELETE_POST'
+
+export const START_EDIT_POST = 'START_EDIT_POST'
+export const SUCCESS_EDIT_POST = 'SUCCESS_EDIT_POST'
+export const FAILED_EDIT_POST = 'FAILED_EDIT_POST'
 
 function startFetchPosts (filter) {
   return {
@@ -136,6 +141,29 @@ function failedDeletePost (error) {
   }
 }
 
+function startEditPost ({ id, title, body }) {
+  return {
+    type: START_EDIT_POST,
+    id,
+    title,
+    body
+  }
+}
+
+function successEditPost (post) {
+  return {
+    type: SUCCESS_EDIT_POST,
+    payload: post
+  }
+}
+
+function failedEditPost (error) {
+  return {
+    type: FAILED_EDIT_POST,
+    error
+  }
+}
+
 export const actionCreators = {
   startFetchPosts,
   successFetchPosts,
@@ -152,9 +180,14 @@ export const actionCreators = {
   startCreateNewPost,
   successCreateNewPost,
   failedCreateNewPost,
+
   resetNewPostState,
   
   startDeletePost,
   successDeletePost,
-  failedDeletePost
+  failedDeletePost,
+
+  startEditPost,
+  successEditPost,
+  failedEditPost,
 }

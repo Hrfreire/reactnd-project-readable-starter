@@ -13,6 +13,14 @@ class NewPost extends Component {
     category: undefined
   }
 
+  componentDidMount() {
+    const { postId, isEdit } = this.props
+
+    if(isEdit) {
+      this.props.startFetchPost(postId)
+    }
+  }
+
   onChangeInput = (input, value) => {    
     this.setState({
       [input]: value
@@ -22,19 +30,38 @@ class NewPost extends Component {
   send = () => {
     const { title, author, body, category } = this.state
 
-    if(!title || !body || !author || !category) {
+    const { postId, isEdit } = this.props
+
+    if (!title || !body || !author || !category) {
       alert('You must fiil all the fields to create a new post.')
+      return
+    }
+
+    if (isEdit) {
+      this.props.startEditPost({ id: postId, title, body })
       return
     }
 
     this.props.startCreateNewPost({ title, author, body, category })
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
 
-    if(this.props.newPostRedirect) {
-      this.props.resetNewPostState()
-      this.props.history.push('/')
+    const { currentPost, newPostRedirect, history, resetNewPostState} = this.props
+
+    if (prevProps.currentPost !== currentPost) {
+      const { title, body, author, category } = currentPost
+      this.setState({
+        title,
+        body,
+        author,
+        category
+      })
+    }
+
+    if (newPostRedirect) {
+      resetNewPostState()
+      history.push('/')
     }
 
   }
@@ -43,11 +70,16 @@ class NewPost extends Component {
 
     const { title, author, body, category } = this.state
 
-    const { categories } = this.props
+    const { categories, isEdit } = this.props
 
     return (
       <div style={{ display: 'flex', alignSelf: 'center', marginTop: 40, flexDirection: 'column' }}>
-        <h2>New Post</h2>
+        
+        {isEdit
+          ? <h2>Edit Post</h2>
+          : <h2>New Post</h2>
+        }
+
         <Form style={{ width: 600 }}>
           <Form.Item>
               <Input
@@ -61,6 +93,7 @@ class NewPost extends Component {
                 placeholder='author'
                 value={author}
                 onChange={(e) => this.onChangeInput('author', e.target.value)}
+                disabled={isEdit}
               />
           </Form.Item>
           <Form.Item>
@@ -68,6 +101,7 @@ class NewPost extends Component {
               value={category}
               onChange={(value) => this.onChangeInput('category', value)}
               placeholder='category'
+              disabled={isEdit}
             >
               { categories.map((category) => 
                 <Select.Option
@@ -96,7 +130,13 @@ class NewPost extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({ ...state.posts, categories: state.categories.categories })
+const mapStateToProps = (state, { match }) => ({ 
+  categories: state.categories.categories,
+  newPostRedirect: state.posts.newPostRedirect,
+  postId: match.params.id,
+  isEdit: match.params.id !== undefined,
+  currentPost: state.posts.currentPost
+})
 
 const mapDispatchToProps = (dispatch) => bindActionCreators(actionCreators, dispatch)
 

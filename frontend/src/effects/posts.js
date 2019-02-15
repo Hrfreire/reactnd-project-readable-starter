@@ -8,7 +8,8 @@ import {
   START_REGISTER_VOTE,
   START_FETCH_POST,
   START_CREATE_NEW_POST,
-  START_DELETE_POST
+  START_DELETE_POST,
+  START_EDIT_POST
 } from '../actions/posts'
 import api from '../api'
 
@@ -98,12 +99,33 @@ function* deletePost ({ postId }) {
   }
 }
 
+function* EditPost ({ id, title, body  }) {
+  try {
+    yield put(showLoading())
+
+    const post = yield call(api, 'put', `posts/${id}`, {
+      title,
+      body,
+    })
+
+    yield put(actionCreators.successEditPost(post))
+  }
+  catch (error) {
+    yield put(actionCreators.failedEditPost(error))
+  }
+  finally {
+    yield put(hideLoading())
+  }
+}
+
+
 export default function* root() {
   yield all([
       takeLatest(START_FETCH_POSTS, fetchPosts),
       takeLatest(START_FETCH_POST, fetchPost),
       takeLatest(START_REGISTER_VOTE, registerVote),
       takeLatest(START_CREATE_NEW_POST, createNewPost),
-      takeLatest(START_DELETE_POST, deletePost)
+      takeLatest(START_DELETE_POST, deletePost),
+      takeLatest(START_EDIT_POST, EditPost)
   ])
 }
