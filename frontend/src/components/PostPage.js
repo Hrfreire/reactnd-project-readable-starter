@@ -34,7 +34,7 @@ class PostPage extends Component {
 
 const mapStateToProps = (state, { match }) => {
   return {
-    id: match.params.id,
+    id: match.params.post_id,
     post: state.posts.currentPost
   }
 }

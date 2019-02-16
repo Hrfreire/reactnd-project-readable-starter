@@ -27,7 +27,7 @@ class CategoriesBar extends Component {
         </Menu.Item>
         { categories.map(category => (
           <Menu.Item key={category.path}>
-            <Link to={category.path}>
+            <Link to={`/${category.path}`}>
               {category.name}
             </Link>
           </Menu.Item>

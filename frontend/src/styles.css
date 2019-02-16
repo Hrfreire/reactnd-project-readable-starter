@@ -4,11 +4,15 @@ ul {
   padding: 0;
 }
 
+.full-width {
+  width: 100%;
+}
+
 .post-list-wrapper {
   display: flex;
   justify-content: center;
   margin-top: 30px;
-  
+  width: 100%;
 }
 
 .post {

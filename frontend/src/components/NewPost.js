@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Form, Input, Select, Button } from 'antd'
+import { Form, Input, Select, Button, Row, Col } from 'antd'
 import { actionCreators } from '../actions/posts'
 
 class NewPost extends Component {
@@ -15,7 +15,6 @@ class NewPost extends Component {
 
   componentDidMount() {
     const { postId, isEdit } = this.props
-
     if(isEdit) {
       this.props.startFetchPost(postId)
     }
@@ -49,7 +48,7 @@ class NewPost extends Component {
 
     const { currentPost, newPostRedirect, history, resetNewPostState} = this.props
 
-    if (prevProps.currentPost !== currentPost) {
+    if (prevProps.currentPost !== currentPost && currentPost !== null) {
       const { title, body, author, category } = currentPost
       this.setState({
         title,
@@ -74,57 +73,60 @@ class NewPost extends Component {
 
     return (
       <div style={{ display: 'flex', alignSelf: 'center', marginTop: 40, flexDirection: 'column' }}>
-        
-        {isEdit
-          ? <h2>Edit Post</h2>
-          : <h2>New Post</h2>
-        }
-
-        <Form style={{ width: 600 }}>
-          <Form.Item>
-              <Input
-                placeholder='title'
-                value={title}
-                onChange={(e) => this.onChangeInput('title', e.target.value)}
-              />
-          </Form.Item>
-          <Form.Item>
-              <Input
-                placeholder='author'
-                value={author}
-                onChange={(e) => this.onChangeInput('author', e.target.value)}
-                disabled={isEdit}
-              />
-          </Form.Item>
-          <Form.Item>
-            <Select
-              value={category}
-              onChange={(value) => this.onChangeInput('category', value)}
-              placeholder='category'
-              disabled={isEdit}
-            >
-              { categories.map((category) => 
-                <Select.Option
-                  key={category.path}
-                  value={category.path}
+        <Row>
+          <Col span={12} offset={6}>
+            {isEdit
+              ? <h2>Edit Post</h2>
+              : <h2>New Post</h2>
+            }
+            <Form>
+              <Form.Item>
+                  <Input
+                    placeholder='title'
+                    value={title}
+                    onChange={(e) => this.onChangeInput('title', e.target.value)}
+                  />
+              </Form.Item>
+              <Form.Item>
+                  <Input
+                    placeholder='author'
+                    value={author}
+                    onChange={(e) => this.onChangeInput('author', e.target.value)}
+                    disabled={isEdit}
+                  />
+              </Form.Item>
+              <Form.Item>
+                <Select
+                  value={category}
+                  onChange={(value) => this.onChangeInput('category', value)}
+                  placeholder='category'
+                  disabled={isEdit}
                 >
-                  {category.name}
-                </Select.Option>
-                )
-              }
-            </Select>
-          </Form.Item>
-          <Form.Item>
-            <Input.TextArea
-              placeholder='body'
-              value={body}
-              onChange={(e) => this.onChangeInput('body', e.target.value)}
-            />
-          </Form.Item>
-          <Form.Item>
-            <Button onClick={this.send}>Send</Button>
-          </Form.Item>
-        </Form>
+                  { categories.map((category) => 
+                    <Select.Option
+                      key={category.path}
+                      value={category.path}
+                    >
+                      {category.name}
+                    </Select.Option>
+                    )
+                  }
+                </Select>
+              </Form.Item>
+              <Form.Item>
+                <Input.TextArea
+                  placeholder='body'
+                  value={body}
+                  onChange={(e) => this.onChangeInput('body', e.target.value)}
+                />
+              </Form.Item>
+              <Form.Item>
+                <Button onClick={this.send}>Send</Button>
+              </Form.Item>
+            </Form>
+          </Col>
+        </Row>
+        
       </div>
     )
   }
@@ -133,8 +135,8 @@ class NewPost extends Component {
 const mapStateToProps = (state, { match }) => ({ 
   categories: state.categories.categories,
   newPostRedirect: state.posts.newPostRedirect,
-  postId: match.params.id,
-  isEdit: match.params.id !== undefined,
+  postId: match.params.post_id,
+  isEdit: match.params.post_id !== undefined,
   currentPost: state.posts.currentPost
 })
 

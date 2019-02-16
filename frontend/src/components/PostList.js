@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { Button } from 'antd'
+import { Button, Row, Col } from 'antd'
 
 import Post from './Post'
 import { actionCreators } from '../actions/posts'
@@ -27,7 +27,7 @@ class PostList extends Component {
   }
 
   newPost = () => {
-    this.props.history.push('/posts/new')
+    this.props.history.push('/post/new')
   }
   
   render() {
@@ -35,16 +35,22 @@ class PostList extends Component {
     const { posts, startRegisterVote, startDeletePost } = this.props
 
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-        <Button
-          type="primary"
-          style={{ width: 600, marginTop: 30 }}
-          onClick={this.newPost}
-        >
-          New Post
-        </Button>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', width: '100%' }}>
+        <Row className="full-width" >
+          <Col span={12} offset={6}>
+            <Button
+              className="full-width"
+              type="primary"
+              style={{ marginTop: 30 }}
+              onClick={this.newPost}
+            >
+              New Post
+            </Button>  
+          </Col>
+        </Row>
+
         <div className='post-list-wrapper'>
-          <ul>
+          <ul className="full-width">
             { posts.map((post) => 
               <li key={post.id}>
                 <Post

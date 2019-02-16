@@ -10,6 +10,14 @@ export const START_CREATE_NEW_COMMENT = 'START_CREATE_NEW_COMMENT'
 export const SUCCESS_CREATE_NEW_COMMENT = 'SUCCESS_CREATE_NEW_COMMENT'
 export const FAILED_CREATE_NEW_COMMENT = 'FAILED_CREATE_NEW_COMMENT'
 
+export const START_DELETE_COMMENT = 'START_DELETE_COMMENT'
+export const SUCCESS_DELETE_COMMENT = 'SUCCESS_DELETE_COMMENT'
+export const FAILED_DELETE_COMMENT = 'FAILED_DELETE_COMMENT'
+
+export const START_EDIT_COMMENT = 'START_EDIT_COMMENT'
+export const SUCCESS_EDIT_COMMENT = 'SUCCESS_EDIT_COMMENT'
+export const FAILED_EDIT_COMMENT = 'FAILED_EDIT_COMMENT'
+
 function startFetchComments (postId) {
   return {
     type: START_FETCH_COMMENTS,
@@ -78,6 +86,49 @@ function failedCreateNewComment (error) {
   }
 }
 
+function startDeleteComment (commentId) {
+  return {
+    type: START_DELETE_COMMENT,
+    commentId
+  }
+}
+
+function successDeleteComment (commentId) {
+  return {
+    type: SUCCESS_DELETE_COMMENT,
+    commentId
+  }
+}
+
+function failedDeleteComment (error) {
+  return {
+    type: FAILED_DELETE_COMMENT,
+    error
+  }
+}
+
+function startEditComment ({ id, body }) {
+  return {
+    type: START_EDIT_COMMENT,
+    id,
+    body
+  }
+}
+
+function successEditComment (post) {
+  return {
+    type: SUCCESS_EDIT_COMMENT,
+    payload: post
+  }
+}
+
+function failedEditComment (error) {
+  return {
+    type: FAILED_EDIT_COMMENT,
+    error
+  }
+}
+
 
 export const actionCreators = {
   startFetchComments,
@@ -90,5 +141,13 @@ export const actionCreators = {
 
   startCreateNewComment,
   successCreateNewComment,
-  failedCreateNewComment
+  failedCreateNewComment,
+
+  startDeleteComment,
+  successDeleteComment,
+  failedDeleteComment,
+
+  startEditComment,
+  successEditComment,
+  failedEditComment  
 }

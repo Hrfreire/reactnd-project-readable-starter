@@ -1,12 +1,15 @@
 import { takeLatest, put, call, all } from 'redux-saga/effects'
 import uuidv1 from 'uuid/v1'
 import moment from 'moment'
+import { showLoading, hideLoading } from 'react-redux-loading'
 
 import {
   actionCreators,
   START_REGISTER_COMMENT_VOTE,
   START_FETCH_COMMENTS,
-  START_CREATE_NEW_COMMENT
+  START_CREATE_NEW_COMMENT,
+  START_EDIT_COMMENT,
+  START_DELETE_COMMENT
 } from '../actions/comments'
 import api from '../api'
 
@@ -47,11 +50,46 @@ function* createNewComment ({ body, author, parentId }) {
   }
 }
 
+function* deleteComment ({ commentId }) {
+  try {
+    yield put(showLoading())
+
+    yield call(api, 'delete', `comments/${commentId}`)
+    yield put(actionCreators.successDeleteComment(commentId))
+  }
+  catch (error) {
+    yield put(actionCreators.failedDeleteComment(error))
+  }
+  finally {
+    yield put(hideLoading())
+  }
+}
+
+function* editComment ({ id, body  }) {
+  try {
+    yield put(showLoading())
+
+    const comment = yield call(api, 'put', `comments/${id}`, {
+      body,
+    })
+
+    yield put(actionCreators.successEditComment(comment))
+  }
+  catch (error) {
+    yield put(actionCreators.failedEditComment(error))
+  }
+  finally {
+    yield put(hideLoading())
+  }
+}
+
 
 export default function* root() {
   yield all([
       takeLatest(START_FETCH_COMMENTS, fetchComments),
       takeLatest(START_REGISTER_COMMENT_VOTE, registerCommentVote),
-      takeLatest(START_CREATE_NEW_COMMENT, createNewComment)
+      takeLatest(START_CREATE_NEW_COMMENT, createNewComment),
+      takeLatest(START_DELETE_COMMENT, deleteComment),
+      takeLatest(START_EDIT_COMMENT, editComment)
   ])
 }

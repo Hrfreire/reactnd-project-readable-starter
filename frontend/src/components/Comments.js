@@ -32,7 +32,7 @@ class Comments extends Component {
         <Divider style={{ height: 2}}/>
         <NewComment postId={postId} createNewComment={this.createNewComment} />
         <Divider style={{ height: 2}}/>
-        <h3>{comments.length} Comments</h3>
+        <h3>{comments.length} Comment{comments.length > 1 && 's'}</h3>
         <ul>
           {comments.map((comment) => 
             <Comment

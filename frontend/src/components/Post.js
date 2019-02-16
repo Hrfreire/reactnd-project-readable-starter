@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { Card, Row, Col, Icon, Menu, Dropdown } from 'antd'
+import { Card, Row, Col } from 'antd'
 import moment from 'moment'
 import { Link, withRouter } from 'react-router-dom'
 import VoteScore from './VoteScore'
+import PopOverOptions from './PopOverOptions'
 
 class Post extends Component {
 	
@@ -17,34 +18,14 @@ class Post extends Component {
 	}
 
 	handleMenuClick = ({ key }) => {
-		const { id, startDeletePost, history } = this.props
+		const { id, category, startDeletePost, history } = this.props
 		
 		console.log(key)
 		if (key === 'delete') {
 			startDeletePost(id)
 		} else {
-			history.push(`/posts/edit/${id}`)
+			history.push(`/${category}/${id}/edit`)
 		}
-	}
-
-	renderMenu = () => {
-		const options = (
-			<Menu onClick={this.handleMenuClick}>
-				<Menu.Item key="edit">
-					<Icon type="edit" theme="outlined" /> Edit
-				</Menu.Item>
-				
-				<Menu.Item key="delete">
-					<Icon type="delete" theme="outlined"/>Delete
-				</Menu.Item>
-			</Menu>
-		)		
-		
-		return (
-			<Dropdown overlay={options} trigger={['click']}>
-				<Icon type="ellipsis" theme="outlined"/>
-			</Dropdown>
-		)
 	}
 
 	render() {
@@ -56,46 +37,58 @@ class Post extends Component {
 			author,
 			category,
 			voteScore,
-			timestamp
+			timestamp,
+			commentCount
 		} = this.props
 
 		return (
-			<Card
-				bordered
-				style={{ marginBottom: 15 }}
-				bodyStyle={{ width: '600px' }}
-				title={
-					<Link to={`/posts/details/${id}`}>
-						{title}
-					</Link>
-				}
-				extra={this.renderMenu()}
-			>
-				<div className='post'>
-						<VoteScore voteScore={voteScore} registerVote={this.registerVote}/>
-						<div className='post-content'>
-							<Row>
-								<p className='post-body'>{body}</p>
-							</Row>
-							<Row>
-								<Col span={12}>
-									<span>Author: {author}</span>
-								</Col>
-								<Col span={12}>
-									<span style={{ float: 'right'}}>
-										Category: {' '} 
-										<Link to={`/${category}`}>
-											{category}
-										</Link>
-									</span>
-								</Col>
-							</Row>
-							<Row style={{ marginTop: 10}}>
-								<span>Posted on: {moment(timestamp).format('LLLL')}</span>
-							</Row>
-					</div>
-				</div>
-			</Card>
+			<Row style={{width:'100%'}}>
+				<Col span={12} offset={6}>
+					<Card
+						bordered
+						style={{ marginBottom: 15 }}
+						bodyStyle={{ width: '100%' }}
+						title={
+							<Link to={`/${category}/${id}`}>
+								{title}
+							</Link>
+						}
+						extra={<PopOverOptions handleMenuClick={(e) =>this.handleMenuClick(e)}/>}
+					>
+						<div className='post'>
+							<VoteScore voteScore={voteScore} registerVote={this.registerVote}/>
+							<div className='post-content'>
+								<Row>
+									<p className='post-body'>{body}</p>
+								</Row>
+								<Row>
+									<Col span={12}>
+										<span>Author: {author}</span>
+									</Col>
+									<Col span={12}>
+										<span style={{ float: 'right'}}>
+											Category: {' '} 
+											<Link to={`/${category}`}>
+												{category}
+											</Link>
+										</span>
+									</Col>
+								</Row>
+								<Row style={{ marginTop: 10}}>
+									<Col span={24}>
+										<span>Posted on: {moment(timestamp).format('LLLL')}</span>
+									</Col>
+								</Row>
+								<Row style={{ marginTop: 10}}>
+									<Col span={24}>
+										<span>{commentCount} comment{commentCount > 1 && 's'}</span>
+									</Col>
+								</Row>
+							</div>
+						</div>
+					</Card>
+				</Col>
+			</Row>
 		)
 			
 	}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, Input, Button } from 'antd'
+import CommentForm from './CommentForm'
 
 class NewComment extends Component {
 
@@ -31,25 +31,13 @@ class NewComment extends Component {
     return (
       <div className='new-comment'>
         <h3>New Comment</h3>
-        <Form>
-          <Form.Item>
-            <Input
-              placeholder='Author'
-              value={author}
-              onChange={(e) => this.onChangeInput('author', e.target.value)}
-            />
-          </Form.Item>
-          <Form.Item>
-            <Input.TextArea
-              placeholder='Content'
-              value={body}
-              onChange={(e) => this.onChangeInput('body', e.target.value)}
-            />
-          </Form.Item>
-          <Form.Item>
-            <Button onClick={this.send}>Send</Button>
-          </Form.Item>
-        </Form>
+        <CommentForm
+          author={author}
+          body={body}
+          onChangeInput={this.onChangeInput}
+          send={this.send}
+          isEdit={false}
+        />
       </div>
     )
   }
