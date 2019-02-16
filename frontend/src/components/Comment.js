@@ -1,64 +1,93 @@
-import React from 'react'
+import React, { Component, Fragment } from 'react'
 import { Row, Col, Divider, Card } from 'antd'
 import moment from 'moment'
 import VoteScore from './VoteScore'
 import PopOverOptions from './PopOverOptions'
+import EditCommentModal from './EditCommentModal'
 
-const handleMenuClick = ({ key, id, startDeleteComment }) => {
+
+export default class Comment extends Component {
 	
-	console.log(key)
-	if (key === 'delete') {
-		startDeleteComment(id)
-	} else {
-	//	history.push(`/${category}/${id}/edit`)
+	state = {
+		showEditModal: false
 	}
-}
 
-export default ({
-	id,
-	voteScore,
-	body,
-	author,
-	timestamp,
-	startRegisterCommentVote,
-	startDeleteComment
-}) => {
-  return (
-		<Card
-			bordered={false}
-			bodyStyle={{ padding:0 }}
-		>
-			<li className='comment'>
-				<VoteScore
-					voteScore={voteScore}
-					registerVote={(vote) => startRegisterCommentVote(id, vote)}
+	handleMenuClick = ({ key }) => {
+		const { startDeleteComment, id } = this.props
+		
+		if (key === 'delete') {
+			startDeleteComment(id)
+		} else {
+			this.setState({
+				showEditModal: true
+			})
+		}
+	}
+
+	sendEdit = (body) => {
+		const { id, startEditComment } = this.props
+
+		this.setState({
+			showEditModal: false
+		})
+
+		startEditComment({ id, body })
+
+	}
+	
+	render() {
+		
+		const {
+			id,
+			voteScore,
+			body,
+			author,
+			timestamp,
+			startRegisterCommentVote
+		} = this.props
+
+		const { showEditModal } = this.state
+
+		return (
+			<Fragment>
+				<EditCommentModal
+					visible={showEditModal}
+					sendEdit={this.sendEdit}
+					author={author}
+					body={body}
 				/>
-				<div className='post-content'>
-					<Row>
-						<Col offset={22} span={2}>
-							<PopOverOptions handleMenuClick={({ key }) => {
-								handleMenuClick({
-									key,
-									id,
-									startDeleteComment
-								})
-							}}/>
-						</Col>
-					</Row>
-					<Row>
-						<p className='post-body'>{body}</p>
-					</Row>
-					<Row>
-						<Col span={12}>
-							<span>Author: {author}</span>
-						</Col>
-					</Row>
-					<Row style={{ marginTop: 10}}>
-						<span>Commented on: {moment(timestamp).format('LLLL')}</span>
-					</Row>
-				</div>
-			</li>
-			<Divider />
-		</Card>
-  )
+
+				<Card
+					bordered={false}
+					bodyStyle={{ padding:0 }}
+				>
+					<li className='comment'>
+						<VoteScore
+							voteScore={voteScore}
+							registerVote={(vote) => startRegisterCommentVote(id, vote)}
+						/>
+						<div className='post-content'>
+							<Row>
+								<Col offset={22} span={2}>
+									<PopOverOptions handleMenuClick={this.handleMenuClick}/>
+								</Col>
+							</Row>
+							<Row>
+								<p className='post-body'>{body}</p>
+							</Row>
+							<Row>
+								<Col span={12}>
+									<span>Author: {author}</span>
+								</Col>
+							</Row>
+							<Row style={{ marginTop: 10}}>
+								<span>Commented on: {moment(timestamp).format('LLLL')}</span>
+							</Row>
+						</div>
+					</li>
+					<Divider />
+				</Card>
+			</Fragment>
+		)
+	}
 }

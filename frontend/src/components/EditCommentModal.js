@@ -8,9 +8,13 @@ export default class EditCommentModal extends Component {
     body: ''
   }
 
-  getderivedstatefromprops(props, state) {
-    return {
-      body: props.comment.body
+  componentDidMount() {
+    this.setState({ body: this.props.body })
+  }
+
+  componentDidUpdate(prevProps) {
+    if(prevProps.body !== this.props.body) {
+      this.setState({ body: this.props.body })
     }
   }
 
@@ -21,21 +25,26 @@ export default class EditCommentModal extends Component {
   }
 
   send = () => {
-    const { comment, startEditComment } = this.props
+    const { sendEdit } = this.props
     const { body } = this.state
 
-    startEditComment({ id: comment.id, body })
+    sendEdit(body)
   }
   
   render() {
-    const { visible } = this.props
+    const { visible, author } = this.props
+    const { body } = this.state
     
     return (
-      <Modal visible={visible}>
+      <Modal visible={visible} footer={null}>
+        <h2>Edit Comment</h2>
         <CommentForm
           isEdit
           onChangeInput={this.onChangeInput}
-          send={this.send} />
+          send={this.send}
+          author={author}
+          body={body}
+        />
       </Modal>
     )
   }

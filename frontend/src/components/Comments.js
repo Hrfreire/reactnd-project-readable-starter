@@ -25,7 +25,13 @@ class Comments extends Component {
   }
 
   render() {
-    const { postId, comments, startRegisterCommentVote } = this.props
+    const {
+      postId,
+      comments, 
+      startRegisterCommentVote,
+      startDeleteComment,
+      startEditComment
+    } = this.props
 
     return (
       <div>
@@ -38,6 +44,8 @@ class Comments extends Component {
             <Comment
               key={comment.id}
               startRegisterCommentVote={startRegisterCommentVote}
+              startEditComment={startEditComment}
+              startDeleteComment={startDeleteComment}
               {...comment}
             />
           )}

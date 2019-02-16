@@ -70,7 +70,7 @@ function* editComment ({ id, body  }) {
     yield put(showLoading())
 
     const comment = yield call(api, 'put', `comments/${id}`, {
-      body,
+      body
     })
 
     yield put(actionCreators.successEditComment(comment))

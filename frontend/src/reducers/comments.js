@@ -8,7 +8,12 @@ import {
   FAILED_REGISTER_COMMENT_VOTE,
   START_CREATE_NEW_COMMENT,
   SUCCESS_CREATE_NEW_COMMENT,
-  FAILED_CREATE_NEW_COMMENT
+  FAILED_CREATE_NEW_COMMENT,
+  SUCCESS_DELETE_COMMENT,
+  FAILED_DELETE_COMMENT,
+  SUCCESS_EDIT_COMMENT,
+  FAILED_EDIT_COMMENT
+
 } from '../actions/comments'
 
 const initialState = {
@@ -82,6 +87,14 @@ export default function reducer(state = initialState, action) {
         ...state,
         loadingCreateComment: false,
         error: action.error
+      }
+    case SUCCESS_EDIT_COMMENT:
+      return {
+        ...state,
+        comments: state.comments.map((comment) => comment.id !== action.payload.id
+          ? comment
+          : action.payload
+        )
       }
     default:
         return state

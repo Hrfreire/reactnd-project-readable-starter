@@ -115,10 +115,10 @@ function startEditComment ({ id, body }) {
   }
 }
 
-function successEditComment (post) {
+function successEditComment (comment) {
   return {
     type: SUCCESS_EDIT_COMMENT,
-    payload: post
+    payload: comment
   }
 }
 
