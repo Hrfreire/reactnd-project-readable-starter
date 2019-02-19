@@ -13,7 +13,8 @@ import {
   SUCCESS_DELETE_POST,
   FAILED_DELETE_POST,
   SUCCESS_EDIT_POST,
-  FAILED_EDIT_POST
+  FAILED_EDIT_POST,
+  SORT_POSTS
 } from '../actions/posts'
 
 const initialState = {
@@ -22,7 +23,26 @@ const initialState = {
   filter: null,
   error: null,
   newPostRedirect: false,
+  sortBy: 'date-descending'
 }
+
+const sortPosts = (posts, sortBy) => {
+  
+  switch(sortBy) {
+    case 'score-descending':
+      return [...posts].sort((a, b) => b.voteScore - a.voteScore)
+    case 'score-ascending':
+      return [...posts].sort((a, b) => a.voteScore - b.voteScore)
+    case 'date-descending':
+      return [...posts].sort(
+        (a, b) => moment.utc(b.timestamp).diff(moment.utc(a.timestamp)))
+    case 'date-ascending':
+      return [...posts].sort(
+        (a, b) => moment.utc(a.timestamp).diff(moment.utc(b.timestamp)))
+    default:
+      return posts
+  }
+ }
 
 export default function reducer(state = initialState, action) {
   switch(action.type) {
@@ -34,9 +54,7 @@ export default function reducer(state = initialState, action) {
     case SUCCESS_FETCH_POSTS:
       return {
         ...state,
-        posts: action.payload.sort(
-          (a, b) => moment.utc(b.timestamp).diff(moment.utc(a.timestamp))
-        ),
+        posts: sortPosts(action.payload, state.sortBy)
       }
     case START_REGISTER_VOTE:
       return {
@@ -115,6 +133,7 @@ export default function reducer(state = initialState, action) {
     case SUCCESS_DELETE_POST:
       return {
         ...state,
+        currentPost: null,
         posts: state.posts.filter((post) => post.id !== action.postId),
       }
     case FAILED_DELETE_POST:
@@ -135,6 +154,12 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         error: action.error
+      }
+    case SORT_POSTS:
+      return {
+        ...state,
+        sortBy: action.sortBy,
+        posts: sortPosts(state.posts, action.sortBy)
       }
     default:
         return state

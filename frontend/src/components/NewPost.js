@@ -15,10 +15,34 @@ class NewPost extends Component {
 
   componentDidMount() {
     const { postId, isEdit } = this.props
-    if(isEdit) {
+    if (isEdit) {
       this.props.startFetchPost(postId)
     }
   }
+
+  componentWillUnmount() {
+    this.props.resetNewPostState()
+  }
+
+  componentDidUpdate(prevProps) {
+
+    const { currentPost, newPostRedirect, history } = this.props
+
+    if (newPostRedirect) {
+      history.push('/')
+    }
+
+    if (prevProps.currentPost !== currentPost && currentPost !== null) {
+      const { title, body, author, category } = currentPost
+      this.setState({
+        title,
+        body,
+        author,
+        category
+      })
+    }
+  }
+
 
   onChangeInput = (input, value) => {    
     this.setState({
@@ -42,27 +66,6 @@ class NewPost extends Component {
     }
 
     this.props.startCreateNewPost({ title, author, body, category })
-  }
-
-  componentDidUpdate(prevProps) {
-
-    const { currentPost, newPostRedirect, history, resetNewPostState} = this.props
-
-    if (prevProps.currentPost !== currentPost && currentPost !== null) {
-      const { title, body, author, category } = currentPost
-      this.setState({
-        title,
-        body,
-        author,
-        category
-      })
-    }
-
-    if (newPostRedirect) {
-      resetNewPostState()
-      history.push('/')
-    }
-
   }
 
   render () {

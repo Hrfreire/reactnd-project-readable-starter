@@ -24,6 +24,8 @@ export const START_EDIT_POST = 'START_EDIT_POST'
 export const SUCCESS_EDIT_POST = 'SUCCESS_EDIT_POST'
 export const FAILED_EDIT_POST = 'FAILED_EDIT_POST'
 
+export const SORT_POSTS = 'SORT_POSTS'
+
 function startFetchPosts (filter) {
   return {
     type: START_FETCH_POSTS,
@@ -164,6 +166,13 @@ function failedEditPost (error) {
   }
 }
 
+function sortPosts (sortBy) {
+  return {
+    type: SORT_POSTS,
+    sortBy
+  }
+}
+
 export const actionCreators = {
   startFetchPosts,
   successFetchPosts,
@@ -190,4 +199,6 @@ export const actionCreators = {
   startEditPost,
   successEditPost,
   failedEditPost,
+
+  sortPosts,
 }

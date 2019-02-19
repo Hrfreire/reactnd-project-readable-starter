@@ -12,8 +12,14 @@ class PostPage extends Component {
     startFetchPost(id)
   }
 
+  deletePost = (...args) => {
+    const { startDeletePost, history } = this.props
+    startDeletePost(...args)
+    history.push('/')
+  }
+
   render() {
-    const { post, startRegisterVote, startDeletePost } = this.props
+    const { post, startRegisterVote } = this.props
 
     if(post === null) {
       return <div />
@@ -23,7 +29,7 @@ class PostPage extends Component {
       <div className='post-page-wrapper'>
         <Post
           startRegisterVote={startRegisterVote}
-          startDeletePost={startDeletePost}
+          startDeletePost={(...args) => this.deletePost(...args)}
           {...post}
         />
         <Comments postId={post.id} />

@@ -96,7 +96,7 @@ function startDeleteComment (commentId) {
 function successDeleteComment (commentId) {
   return {
     type: SUCCESS_DELETE_COMMENT,
-    commentId
+    payload: commentId
   }
 }
 

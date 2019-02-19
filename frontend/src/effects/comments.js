@@ -36,6 +36,7 @@ function* registerCommentVote ({ commentId, vote }) {
 
 function* createNewComment ({ body, author, parentId }) {
   try {
+    yield put(showLoading())
     const comment = yield call(api, 'post', 'comments', {
       id: uuidv1(),
       timestamp: moment().format(),
@@ -47,6 +48,8 @@ function* createNewComment ({ body, author, parentId }) {
     yield put(actionCreators.successCreateNewComment(comment))
   } catch (error) {
     yield put(actionCreators.failedCreateNewComment(error))
+  } finally {
+    yield put(hideLoading())
   }
 }
 

@@ -96,6 +96,21 @@ export default function reducer(state = initialState, action) {
           : action.payload
         )
       }
+    case FAILED_EDIT_COMMENT:
+      return {
+        ...state,
+        error: action.error
+      }
+    case SUCCESS_DELETE_COMMENT:
+      return {
+        ...state,
+        comments: state.comments.filter(comment => comment.id !== action.payload)
+      }
+    case FAILED_DELETE_COMMENT:
+      return {
+        ...state,
+        error: action.error
+      }
     default:
         return state
   }

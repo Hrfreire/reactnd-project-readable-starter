@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { Button, Row, Col } from 'antd'
+import { Button, Row, Col, Select } from 'antd'
 
 import Post from './Post'
 import { actionCreators } from '../actions/posts'
@@ -32,8 +32,8 @@ class PostList extends Component {
   
   render() {
 
-    const { posts, startRegisterVote, startDeletePost } = this.props
-
+    const { posts, startRegisterVote, startDeletePost, sortPosts, sortBy } = this.props
+    console.log('render', posts)
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', width: '100%' }}>
         <Row className="full-width" >
@@ -46,6 +46,20 @@ class PostList extends Component {
             >
               New Post
             </Button>  
+          </Col>
+          <Col span={4} offset={1} style={{ marginTop: 10 }} >
+            <span>Sort by:</span>
+            <Select
+              placeholder="sort"
+              className="full-width"
+              onChange={value => sortPosts(value)}
+              value={sortBy}
+            >
+              <Select.Option value='date-descending'>Date (Descending)</Select.Option>
+              <Select.Option value='date-ascending'>Date (Ascending)</Select.Option>
+              <Select.Option value='score-descending'>Score (Descending)</Select.Option>
+              <Select.Option value='score-ascending'>Score (Ascending)</Select.Option>
+            </Select>
           </Col>
         </Row>
 
