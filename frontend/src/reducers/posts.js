@@ -1,6 +1,5 @@
 import moment from 'moment'
 import {
-  FAILED_FETCH_POSTS,
   SUCCESS_FETCH_POSTS,
   START_REGISTER_VOTE,
   FAILED_REGISTER_VOTE,
@@ -8,12 +7,9 @@ import {
   SUCCESS_FETCH_POST,
   FAILED_FETCH_POST,
   SUCCESS_CREATE_NEW_POST,
-  FAILED_CREATE_NEW_POST,
   RESET_NEW_POST_STATE,
   SUCCESS_DELETE_POST,
-  FAILED_DELETE_POST,
   SUCCESS_EDIT_POST,
-  FAILED_EDIT_POST,
   SORT_POSTS
 } from '../actions/posts'
 
@@ -21,9 +17,9 @@ const initialState = {
   posts: [],
   currentPost: null,
   filter: null,
-  error: null,
   newPostRedirect: false,
-  sortBy: 'date-descending'
+  sortBy: 'date-descending',
+  fetchPostError: null
 }
 
 const sortPosts = (posts, sortBy) => {
@@ -46,11 +42,6 @@ const sortPosts = (posts, sortBy) => {
 
 export default function reducer(state = initialState, action) {
   switch(action.type) {
-    case FAILED_FETCH_POSTS:
-      return {
-        ...state,
-        error: action.error
-      }
     case SUCCESS_FETCH_POSTS:
       return {
         ...state,
@@ -80,7 +71,6 @@ export default function reducer(state = initialState, action) {
     case FAILED_REGISTER_VOTE:
       return {
         ...state,
-        error: action.error,
         currentPost: state.currentPost !== null && state.currentPost.id === action.postId
         ?  { ...state.currentPost, 
             voteScore: action.vote === 'upVote'
@@ -104,25 +94,20 @@ export default function reducer(state = initialState, action) {
         ...state,
         currentPost: null
       }
+    case FAILED_FETCH_POST:
+      return {
+        ...state,
+        fetchPostError: action.error
+      }
     case SUCCESS_FETCH_POST:
       return {
         ...state,
         currentPost: action.payload
       }
-    case FAILED_FETCH_POST:
-      return {
-        ...state,
-        error: action.error
-      }
     case SUCCESS_CREATE_NEW_POST:
       return {
         ...state,
         newPostRedirect: true
-      }
-    case FAILED_CREATE_NEW_POST:
-      return {
-        ...state,
-        error: action.error
       }
     case RESET_NEW_POST_STATE:
       return {
@@ -136,11 +121,6 @@ export default function reducer(state = initialState, action) {
         currentPost: null,
         posts: state.posts.filter((post) => post.id !== action.postId),
       }
-    case FAILED_DELETE_POST:
-      return {
-        ...state,
-        error: action.error
-      }
     case SUCCESS_EDIT_POST:
       return {
         ...state,
@@ -149,11 +129,6 @@ export default function reducer(state = initialState, action) {
           ? { ...post }
           : { ...action.payload }
         )
-      }
-    case FAILED_EDIT_POST:
-      return {
-        ...state,
-        error: action.error
       }
     case SORT_POSTS:
       return {

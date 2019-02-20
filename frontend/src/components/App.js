@@ -5,6 +5,7 @@ import PostList from './PostList'
 import PostPage from './PostPage'
 import CategoriesBar from './CategoriesBar'
 import NewPost from './NewPost'
+import NotFound from './NotFound'
 
 class App extends Component {
   render() {
@@ -15,11 +16,15 @@ class App extends Component {
             <LoadingBar />
             <Route path='/:category?' component={CategoriesBar}/>
             <Switch>
+              <Route path='/page-not-found' exact component={NotFound}/>
+              
               <Route path='/post/new' exact component={NewPost}/>
               
               <Route path='/:category?' exact component={PostList}/>
               <Route path='/:category/:post_id' exact component={PostPage}/>
               <Route path='/:category/:post_id/edit' exact component={NewPost}/>
+              
+              <Route component={NotFound}/>
             </Switch>
           </Fragment>
         </Router>

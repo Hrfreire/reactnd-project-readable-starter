@@ -18,6 +18,13 @@ class PostPage extends Component {
     history.push('/')
   }
 
+  componentDidUpdate() {
+    const { postError, history } = this.props
+    if(postError) {
+      history.push('/page-not-found')
+    }
+  }
+
   render() {
     const { post, startRegisterVote } = this.props
 
@@ -41,7 +48,8 @@ class PostPage extends Component {
 const mapStateToProps = (state, { match }) => {
   return {
     id: match.params.post_id,
-    post: state.posts.currentPost
+    post: state.posts.currentPost,
+    postError: (state.posts.fetchPostError !== null)
   }
 }
 
