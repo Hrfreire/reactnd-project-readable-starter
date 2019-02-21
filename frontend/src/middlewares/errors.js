@@ -18,7 +18,7 @@ import {
   FAILED_FETCH_CATEGORIES
 } from '../actions/categories'
 
-const errors = (store) => (next) => (action) => {
+const errors = () => (next) => (action) => {
   let errorMessage;
 
   switch (action.type) {

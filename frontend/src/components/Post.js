@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Card, Row, Col } from 'antd'
 import moment from 'moment'
 import { Link, withRouter } from 'react-router-dom'
+import PropTypes from 'prop-types'
 import VoteScore from './VoteScore'
 import PopOverOptions from './PopOverOptions'
 
@@ -20,7 +21,6 @@ class Post extends Component {
 	handleMenuClick = ({ key }) => {
 		const { id, category, startDeletePost, history } = this.props
 		
-		console.log(key)
 		if (key === 'delete') {
 			startDeletePost(id)
 		} else {
@@ -89,9 +89,24 @@ class Post extends Component {
 					</Card>
 				</Col>
 			</Row>
-		)
-			
+		)	
 	}
+}
+
+Post.propTypes = {
+	id: PropTypes.string.isRequired,
+	title: PropTypes.string.isRequired,
+	body: PropTypes.string.isRequired,
+	author: PropTypes.string.isRequired,
+	category: PropTypes.string.isRequired,
+	voteScore: PropTypes.number.isRequired,
+	timestamp: PropTypes.number.isRequired,
+	commentCount: PropTypes.number.isRequired,
+	history: PropTypes.shape({
+		push: PropTypes.func.isRequired
+	}),
+	startDeletePost: PropTypes.func.isRequired,
+	startRegisterVote: PropTypes.func.isRequired
 }
 
 export default withRouter(Post)

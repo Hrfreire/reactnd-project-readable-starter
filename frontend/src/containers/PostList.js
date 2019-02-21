@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Button, Row, Col, Select } from 'antd'
+import PropTypes from 'prop-types'
 
 import Post from '../components/Post'
 import { actionCreators } from '../actions/posts'
@@ -31,9 +32,8 @@ class PostList extends Component {
   }
   
   render() {
-
     const { posts, startRegisterVote, startDeletePost, sortPosts, sortBy } = this.props
-    console.log('render', posts)
+
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', width: '100%' }}>
         <Row className="full-width" >
@@ -79,6 +79,30 @@ class PostList extends Component {
       </div>
     )
   }
+}
+
+PostList.propTypes = {
+	posts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      body: PropTypes.string.isRequired,
+      author: PropTypes.string.isRequired,
+      category: PropTypes.string.isRequired,
+      voteScore: PropTypes.number.isRequired,
+      timestamp: PropTypes.number.isRequired,
+      commentCount: PropTypes.number.isRequired,
+    }).isRequired
+  ).isRequired,
+  category: PropTypes.string,
+	history: PropTypes.shape({
+		push: PropTypes.func.isRequired
+	}),
+  sortBy: PropTypes.string.isRequired,
+	startDeletePost: PropTypes.func.isRequired,
+  startRegisterVote: PropTypes.func.isRequired,
+  sortPosts: PropTypes.func.isRequired,
+  startFetchPosts: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state, { match }) => {

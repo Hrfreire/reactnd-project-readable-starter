@@ -67,7 +67,7 @@ function* createNewPost ({ title, body, author, category }) {
 
     const post = yield call(api, 'post', 'posts', {
       id: uuidv1(),
-      timestamp: moment().format(),
+      timestamp: moment().valueOf(),
       title,
       body,
       author,

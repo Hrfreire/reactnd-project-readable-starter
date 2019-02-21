@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Menu } from 'antd'
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
 import { actionCreators } from '../actions/categories'
 
 class CategoriesBar extends Component {
@@ -37,8 +38,19 @@ class CategoriesBar extends Component {
   }
 }
 
+CategoriesBar.propTypes = {
+  currentCategory: PropTypes.string.isRequired,
+  categories: PropTypes.arrayOf(
+    PropTypes.shape({
+      path: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired
+    }).isRequired,
+  ).isRequired,
+  startFetchCategories: PropTypes.func.isRequired
+}
+
 const mapStateToProps = (state, { match }) => ({
-  ...state.categories,
+  categories: state.categories.categories,
   currentCategory: match.params.category || 'all'
 })
 

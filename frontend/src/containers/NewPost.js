@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Form, Input, Select, Button, Row, Col } from 'antd'
+import PropTypes from 'prop-types'
 import { actionCreators } from '../actions/posts'
 
 class NewPost extends Component {
@@ -56,7 +57,7 @@ class NewPost extends Component {
     const { postId, isEdit } = this.props
 
     if (!title || !body || !author || !category) {
-      alert('You must fiil all the fields to create a new post.')
+      alert('You must fiil all the fields to create a new post.') //eslint-disable-line
       return
     }
 
@@ -133,6 +134,33 @@ class NewPost extends Component {
       </div>
     )
   }
+}
+
+NewPost.propTypes = {
+  categories: PropTypes.arrayOf(
+    PropTypes.shape({
+      path: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired
+    }).isRequired
+  ).isRequired,
+  currentPost: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    body: PropTypes.string.isRequired,
+    author: PropTypes.string.isRequired,
+    category: PropTypes.string.isRequired,
+    
+  }),
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired
+  }).isRequired,
+  newPostRedirect: PropTypes.bool.isRequired,
+  postId: PropTypes.string,
+  isEdit: PropTypes.bool.isRequired,
+  startFetchPost: PropTypes.func.isRequired,
+  startCreateNewPost: PropTypes.func.isRequired,
+  startEditPost: PropTypes.func.isRequired,
+  resetNewPostState: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state, { match }) => ({ 

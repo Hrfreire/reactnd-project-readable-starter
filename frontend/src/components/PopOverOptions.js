@@ -1,7 +1,8 @@
 import React from 'react';
 import { Icon, Menu, Dropdown } from 'antd'
+import PropTypes from 'prop-types'
 
-export default ({ handleMenuClick }) => {
+function PopOverOptions ({ handleMenuClick }) {
   const options = (
     <Menu onClick={handleMenuClick}>
       <Menu.Item key="edit">
@@ -20,3 +21,9 @@ export default ({ handleMenuClick }) => {
     </Dropdown>
   )
 }
+
+PopOverOptions.propTypes = {
+  handleMenuClick: PropTypes.func.isRequired
+}
+
+export default PopOverOptions;

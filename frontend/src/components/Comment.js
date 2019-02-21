@@ -1,12 +1,12 @@
 import React, { Component, Fragment } from 'react'
 import { Row, Col, Divider, Card } from 'antd'
 import moment from 'moment'
+import PropTypes from 'prop-types'
 import VoteScore from './VoteScore'
 import PopOverOptions from './PopOverOptions'
 import EditCommentModal from './EditCommentModal'
 
-
-export default class Comment extends Component {
+class Comment extends Component {
 	
 	state = {
 		showEditModal: false
@@ -91,3 +91,16 @@ export default class Comment extends Component {
 		)
 	}
 }
+
+Comment.propTypes = {
+	id: PropTypes.string.isRequired,
+	voteScore: PropTypes.number.isRequired,
+	body: PropTypes.string.isRequired,
+	author: PropTypes.string.isRequired,
+	timestamp: PropTypes.number.isRequired,
+	startRegisterCommentVote: PropTypes.func.isRequired,
+	startDeleteComment: PropTypes.func.isRequired,
+	startEditComment: PropTypes.func.isRequired
+}
+
+export default Comment

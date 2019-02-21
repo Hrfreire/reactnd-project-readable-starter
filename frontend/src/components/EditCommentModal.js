@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { Modal } from 'antd'
+import PropTypes from 'prop-types'
 import CommentForm from './CommentForm'
 
-export default class EditCommentModal extends Component {
+class EditCommentModal extends Component {
 
   state = {
     body: ''
@@ -49,3 +50,12 @@ export default class EditCommentModal extends Component {
     )
   }
 }
+
+EditCommentModal.propTypes = {
+  body: PropTypes.string.isRequired,
+  visible: PropTypes.bool.isRequired,
+  author: PropTypes.string.isRequired,
+  sendEdit: PropTypes.func.isRequired
+}
+
+export default EditCommentModal;

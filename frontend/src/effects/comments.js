@@ -39,7 +39,7 @@ function* createNewComment ({ body, author, parentId }) {
     yield put(showLoading())
     const comment = yield call(api, 'post', 'comments', {
       id: uuidv1(),
-      timestamp: moment().format(),
+      timestamp: moment().valueOf(),
       parentId,
       body,
       author

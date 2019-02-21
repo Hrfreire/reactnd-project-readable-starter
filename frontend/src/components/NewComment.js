@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import CommentForm from './CommentForm'
 
 class NewComment extends Component {
@@ -41,6 +42,10 @@ class NewComment extends Component {
       </div>
     )
   }
+}
+
+NewComment.propTypes = {
+  createNewComment: PropTypes.func.isRequired
 }
 
 export default NewComment

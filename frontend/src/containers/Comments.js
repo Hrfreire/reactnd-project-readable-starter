@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Divider } from 'antd'
+import PropTypes from 'prop-types'
 import { actionCreators } from '../actions/comments'
 import NewComment from '../components/NewComment'
 import Comment from '../components/Comment'
@@ -53,6 +54,24 @@ class Comments extends Component {
       </div>
     )
   }
+}
+
+Comments.propTypes = {
+	comments: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      voteScore: PropTypes.number.isRequired,
+      body: PropTypes.string.isRequired,
+      author: PropTypes.string.isRequired,
+      timestamp: PropTypes.number.isRequired
+    }).isRequired
+  ).isRequired,
+  postId: PropTypes.string.isRequired,
+  startRegisterCommentVote: PropTypes.func.isRequired,
+  startDeleteComment: PropTypes.func.isRequired,
+  startEditComment: PropTypes.func.isRequired,
+  startFetchComments: PropTypes.func.isRequired,
+  startCreateNewComment: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => state.comments
