@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Button, Row, Col, Select } from 'antd'
 
-import Post from './Post'
+import Post from '../components/Post'
 import { actionCreators } from '../actions/posts'
 
 class PostList extends Component {

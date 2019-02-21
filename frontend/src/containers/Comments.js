@@ -3,8 +3,8 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Divider } from 'antd'
 import { actionCreators } from '../actions/comments'
-import NewComment from './NewComment'
-import Comment from './Comment'
+import NewComment from '../components/NewComment'
+import Comment from '../components/Comment'
 
 class Comments extends Component {
 

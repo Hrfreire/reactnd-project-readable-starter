@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { actionCreators } from '../actions/posts'
-import Post from './Post'
+import Post from '../components/Post'
 import Comments from './Comments'
 
 class PostPage extends Component {
