@@ -29,6 +29,11 @@ class EditCommentModal extends Component {
     const { sendEdit } = this.props
     const { body } = this.state
 
+    if(!body) {
+      alert('You must fiil body field to edit a comment.') //eslint-disable-line
+      return
+    }
+
     sendEdit(body)
   }
   

@@ -20,6 +20,11 @@ class NewComment extends Component {
 
     const { createNewComment } = this.props
 
+    if(!author || !body) {
+      alert('You must fiil all the fields to create a new comment.') //eslint-disable-line
+      return
+    }
+
     createNewComment({ author, body })
 
     this.setState({ author: '', body: '' })

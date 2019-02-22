@@ -57,7 +57,7 @@ class NewPost extends Component {
     const { postId, isEdit } = this.props
 
     if (!title || !body || !author || !category) {
-      alert('You must fiil all the fields to create a new post.') //eslint-disable-line
+      alert(`You must fiil all the fields to ${isEdit ? 'edit' : 'create'} a new post.`) //eslint-disable-line
       return
     }
 
