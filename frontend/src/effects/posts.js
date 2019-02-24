@@ -40,6 +40,12 @@ function* fetchPost ({ postId }) {
     yield put(showLoading())
 
     const post =  yield call(api, 'get', `posts/${postId}`)
+    
+    if(Object.entries(post).length === 0 && post.constructor === Object) {
+      const error = new Error('Post not found.')
+      error.status = 404
+      throw error;
+    }
 
     yield put(actionCreators.successFetchPost(post))
   }

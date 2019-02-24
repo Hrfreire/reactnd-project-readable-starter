@@ -21,6 +21,11 @@ import {
 const errors = () => (next) => (action) => {
   let errorMessage;
 
+  //it's not necessary handle 404 errors, because the app will render the 404 page.
+  if(action.error && action.error.status === 404) {
+    return next(action);
+  }
+
   switch (action.type) {
     case FAILED_CREATE_NEW_POST:
       errorMessage = 'Failed to create new post. Try Again Later.'
