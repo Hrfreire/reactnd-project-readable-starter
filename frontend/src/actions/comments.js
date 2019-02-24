@@ -72,10 +72,10 @@ function startCreateNewComment ({ body, author, parentId }) {
   }
 }
 
-function successCreateNewComment (comment) {
+function successCreateNewComment ({ comment, postId }) {
   return {
     type: SUCCESS_CREATE_NEW_COMMENT,
-    payload: comment
+    payload:{ comment, postId }
   }
 }
 
@@ -86,17 +86,18 @@ function failedCreateNewComment (error) {
   }
 }
 
-function startDeleteComment (commentId) {
+function startDeleteComment ({ commentId, postId }) {
   return {
     type: START_DELETE_COMMENT,
-    commentId
+    commentId,
+    postId
   }
 }
 
-function successDeleteComment (commentId) {
+function successDeleteComment ({ commentId, postId }) {
   return {
     type: SUCCESS_DELETE_COMMENT,
-    payload: commentId
+    payload: { commentId, postId }
   }
 }
 

@@ -45,7 +45,7 @@ function* createNewComment ({ body, author, parentId }) {
       author
     })
 
-    yield put(actionCreators.successCreateNewComment(comment))
+    yield put(actionCreators.successCreateNewComment({ comment, postId: parentId }))
   } catch (error) {
     yield put(actionCreators.failedCreateNewComment(error))
   } finally {
@@ -53,12 +53,12 @@ function* createNewComment ({ body, author, parentId }) {
   }
 }
 
-function* deleteComment ({ commentId }) {
+function* deleteComment ({ commentId, postId }) {
   try {
     yield put(showLoading())
 
     yield call(api, 'delete', `comments/${commentId}`)
-    yield put(actionCreators.successDeleteComment(commentId))
+    yield put(actionCreators.successDeleteComment({ commentId, postId }))
   }
   catch (error) {
     yield put(actionCreators.failedDeleteComment(error))

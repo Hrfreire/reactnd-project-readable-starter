@@ -80,7 +80,7 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         loadingCreateComment: false,
-        comments: [action.payload, ...state.comments]
+        comments: [action.payload.comment, ...state.comments]
       }
     case FAILED_CREATE_NEW_COMMENT:
       return {
@@ -104,7 +104,7 @@ export default function reducer(state = initialState, action) {
     case SUCCESS_DELETE_COMMENT:
       return {
         ...state,
-        comments: state.comments.filter(comment => comment.id !== action.payload)
+        comments: state.comments.filter(comment => comment.id !== action.payload.commentId)
       }
     case FAILED_DELETE_COMMENT:
       return {

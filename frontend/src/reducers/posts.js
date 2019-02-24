@@ -13,6 +13,8 @@ import {
   SORT_POSTS
 } from '../actions/posts'
 
+import { SUCCESS_DELETE_COMMENT, SUCCESS_CREATE_NEW_COMMENT } from '../actions/comments'
+
 const initialState = {
   posts: [],
   currentPost: null,
@@ -135,6 +137,30 @@ export default function reducer(state = initialState, action) {
         ...state,
         sortBy: action.sortBy,
         posts: sortPosts(state.posts, action.sortBy)
+      }
+    case SUCCESS_DELETE_COMMENT:
+      return {
+        ...state,
+        currentPost: state.currentPost !== null && state.currentPost.id === action.payload.postId
+          ? { ...state.currentPost, commentCount: state.currentPost.commentCount - 1 }
+          : state.currentPost,
+        posts: state.posts.map(post => 
+          post.id === action.postId
+            ? post
+            : { ...post, commentCount: post.commentCount -1 }
+        )
+      }
+    case SUCCESS_CREATE_NEW_COMMENT:
+      return {
+        ...state,
+        currentPost: state.currentPost !== null && state.currentPost.id === action.payload.postId
+          ? { ...state.currentPost, commentCount: state.currentPost.commentCount + 1 }
+          : state.currentPost,
+        posts: state.posts.map(post => 
+          post.id === action.postId
+            ? post
+            : { ...post, commentCount: post.commentCount + 1 }
+        )
       }
     default:
         return state

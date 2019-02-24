@@ -25,12 +25,17 @@ class Comments extends Component {
     })
   }
 
+  deleteComment = (commentId) => {
+    const { postId, startDeleteComment } = this.props
+
+    startDeleteComment({ commentId, postId })
+  }
+
   render() {
     const {
       postId,
       comments, 
       startRegisterCommentVote,
-      startDeleteComment,
       startEditComment
     } = this.props
 
@@ -46,7 +51,7 @@ class Comments extends Component {
               key={comment.id}
               startRegisterCommentVote={startRegisterCommentVote}
               startEditComment={startEditComment}
-              startDeleteComment={startDeleteComment}
+              startDeleteComment={this.deleteComment}
               {...comment}
             />
           )}
